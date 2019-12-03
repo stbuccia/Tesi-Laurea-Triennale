@@ -1,4 +1,3 @@
 NAME = tesi
 all:
-	pandoc --self-contained $(NAME).md -o $(NAME).tex
-	pandoc  --pdf-engine=xelatex $(NAME).tex -o $(NAME).pdf
+	pandoc --self-contained --toc $(NAME).md -o $(NAME).pdf -H header.tex -V documentclass=report -V number-subsections=true

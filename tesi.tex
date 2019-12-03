@@ -32,6 +32,44 @@
             pdfborder={0 0 0},
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -70,152 +108,321 @@ si hanno a disposizione i mezzi per eliminare questa figura, perché si
 ha un sistema in cui l'esistenza stessa di un contratto valida la
 transazione.
 
-Questi tipi di contratti che vengono definiti come smart contract, e
+Questi tipi di contratti vengono definiti \emph{smart contract}, e
 devono garantire le proprietà di fiducia, affidabilità e di sicurezza,
 che in precedenza erano delegate al garante, ma che adesso diventano
 possibili grazie alle blockchain. Queste ultime sono code nelle quali è
 consentita l'operazione di lettura, mentre l'unica operazione di
 scrittura è l'aggiunta (o transazione): non è possibile quindi
 modificare un elemento già presente nella blockchain; di conseguenza
-mantiene un registro con la storia di tutte le transazioni eseguite.
-Inoltre questa struttura dati è distribuita, quindi va a far parte di
+viene mantenuto un registro con la storia di tutte le transazioni
+eseguite. Inoltre questa struttura dati è distribuita, quindi è parte di
 una rete peer-to-peer in cui viene replicata per ogni nodo. Di
-conseguenza gli smart contract, se memorizzati nella blockchain,
+conseguenza gli \emph{smart contract}, se memorizzati nella blockchain,
 diventano programmi che possono essere eseguiti in modo distribuito e
 sicuro, e che controllano lo scambio di denaro tra diverse parti.
 
-A livello di programmazione uno smart contract sono definiti da un
-identificativo, uno stato --cioè i dati-- e del codice, inteso come
-insieme di metodi che modificano lo stato del contratto ed eseguono
-transazioni. Per implementare smart contract sono messi a disposizioni
-linguaggi di programmazione dedicati, a ognuno dei quali è associata la
-relativa blockchain, ad esempio troviamo il linguaggio Solidity per la
-blockchain Ethereum o Liquidity per Tezos.
+A livello di programmazione uno \emph{smart contract} è definito da un
+identificativo, da uno stato -- cioè i dati -- e da del codice, inteso
+come insieme di metodi che modificano lo stato del contratto ed eseguono
+transazioni. Per implementare \emph{smart contract} sono messi a
+disposizioni linguaggi di programmazione dedicati, a ognuno dei quali è
+associata la relativa blockchain, ad esempio troviamo il linguaggio
+Solidity per la blockchain Ethereum o Liquidity per Tezos.
 
-Pertanto, il codice presente nei contratti è codice critico, in quanto
-possono gestire considerevoli somme di denaro, e è quindi interessante
-fare analisi statica sul comportamento degli smart contract, in merito
-sono stati fatti diversi lavori\footnote{https://link.springer.com/content/pdf/10.1007\%2F978-3-030-30985-5\_23.pdf}.
-Di questi è particolarmente interessante un lavoro in cui emerge che nel
-momento in cui un utente razionale agisce per minimizzare le perdite di
-denaro (o equivalentemente per massimizzare il guadagno) il codice dello
-smart contract lo può forzare a determinate decisioni. In questo
-contesto per forzare si intende che da parte dell'utente l'aderenza al
-contratto avviene, perché se non ci fosse l'utente interessato
-perderebbe dei soldi. Questa analisi è stata fatta definendo un
-linguaggio, chiamato scl (smartCalculus), con un ristretto insieme di
-funzioni sugli smart contract, e che permettesse di modellare il
-comportamento di contratti e utenti (umani). Scl è un linguaggio ad
-attori minimale, così rende più semplice l'analisi di smart contract, ma
-allo stesso tempo espressivo abbastanza da essere Turing completo:
-permette l'invocazione di metodi, la modifica dei campi, comportamento
-condizionale, la ricorsione, il sollevamento di eccezioni. Il
-comportamento del sistema poi è espresso come questi modelli si passa
-poi ad aritmetica di logica di Presburger
+Siccome possono gestire considerevoli somme di denaro, il codice dei
+contratti è codice critico: diventa quindi interessante fare analisi
+statica sul comportamento degli \emph{smart contract}. In merito sono
+stati fatti diversi lavori; di questi ne è particolarmente interessante
+uno \footnote{https://link.springer.com/content/pdf/10.1007\%2F978-3-030-30985-5\_23.pdf}
+in cui emerge che, nel momento in cui un utente razionale agisce per
+minimizzare le perdite di denaro (o equivalentemente per massimizzare il
+guadagno), il codice dello \emph{smart contract} lo può forzare a
+determinate decisioni. In questo contesto per ``forzare la decisione''
+si intende che da parte dell'utente l'aderenza al contratto avviene --
+perché se non ci fosse l'utente interessato perderebbe dei soldi. Questa
+analisi è stata fatta definendo un linguaggio, chiamato \texttt{scl}
+(smartCalculus), con un ristretto insieme di funzioni sugli \emph{smart
+contract}, che permette di modellare il comportamento di contratti e
+utenti (umani). \texttt{Scl} è un linguaggio ad attori minimale, che
+rende più semplice l'analisi di \emph{smart contract} -- ma allo stesso
+tempo espressivo abbastanza da essere Turing completo: permette
+l'invocazione di metodi, la modifica dei campi, il comportamento
+condizionale, la ricorsione, il sollevamento di eccezioni. Può essere
+scritto un programma in \texttt{scl} che corrisponde a un modello dove
+gli utenti e i contratti interagiscono tra loro. L'analisi prevede che
+il comportamento di umani e contratti nel sistema viene tradotto
+un'unica formula logica nell'aritmetica di Presburger e risolvendola si
+studia il comportamento per cui ciascun utente cerca di massimizzare il
+profitto.
 
-\hypertarget{parser}{%
-\section{Parser}\label{parser}}
+Si è quindi realizzato che questa analisi non aveva a disposizione tutti
+gli strumenti necessari. Verrà quindi mostrata l'implementazione che è
+stata fatta per gli strumenti che hanno fornito supporto, rendendo
+l'analisi più semplice e completa.
+
+In primo luogo, si può notare che la stesura del codice \texttt{scl}
+risulta complicata in quanto non presenta una sua sintassi: per scrivere
+il codice è necessario scrivere direttamente le strutture del linguaggio
+-- che comunque sono ad alto livello, considerando che è implementato in
+\texttt{OCaml}. È quindi stato realizzato un parser verso \texttt{scl}:
+viene definita una sintassi più leggibile e conforme alle sintassi dei
+linguaggi di programmazione più conosciuti -- sintassi che il parser
+riconosce, e da questa costruisce codice \texttt{scl}. Lo scopo del
+parser, dunque, è di fornire un mezzo per rendere più facile la stesura
+del codice. L'implementazione del parser avviene grazie alla tecnica dei
+parser, dove ogni parser è una funzione che riconosce parte della
+sintassi e genera codice \texttt{scl}, e i parser a loro volta sono
+composti tra loro da delle funzioni di ordine superiore. Si riesce
+quindi a realizzare detto parser seguendo la sintassi definita in
+precedenza. Come conseguenza all'uso dei parser combinator, il parser in
+questione sarà LL(1) opera quindi in maniera ricorsiva costruendo
+l'albero di sintassi astratta da sinistra a destra, partendo dalla
+radice.
+
+\hypertarget{tecniche-per-limplementazione-di-intrinsically-typed-data-structures}{%
+\section{Tecniche per l'implementazione di Intrinsically Typed Data
+Structures}\label{tecniche-per-limplementazione-di-intrinsically-typed-data-structures}}
 
 \hypertarget{introduzione-1}{%
 \subsection{Introduzione}\label{introduzione-1}}
 
-In questa sezione ci si concentra sull'implementazione del parser per
-scl: il parser, per come è definito, deve prendere in input una lista di
-caratteri e determinarne la correttezza, basandosi su una certa
-grammatica formale, generando quindi un albero di sintassi astratta per
-tale lista. Il parser in considerazione è implementato in OCaml, questa
-scelta risulta abbastanza ovvia dal momento che lo stesso scl è
-implementato in questo linguaggio.
+Durante la compilazione verso un linguaggio qualsiasi, il compilatore si
+deve preoccupare del \emph{type checking} cioè di quell'operazione che
+si preoccupa di verificare che i vincoli di tipo nel programma vengano
+rispettati, condizione che viene chiamata \emph{type safety}. Ad esempio
+un vincolo di tipo si ha in un assegnamento, dove è richiesto che il
+tipo del \emph{lhs} sia compatibile con il tipo del \emph{rhs},
+altrimenti si può incorrere in diversi errori durante l'esecuzione.
 
-Si tiene inoltre a precisare che l'albero di derivazione generato dal
-parser è direttamente codice scl: siccome il parser non è un compilatore
-successivamente all'analisi sintattica non si hanno altre fasi di
-generazione del codice.
+In questa sezione vengono esaminate le tecniche per garantire la
+\emph{type safety} nel parser e nel compilatore in questione, viene
+quindi definita un'\emph{Intrinsically Typed Data Structure} e vengono
+mostrate le tecniche presenti in \texttt{OCaml} per implementarla.
+
+\hypertarget{section}{%
+\subsection{}\label{section}}
+
+Tradizionalmente il \emph{type checking} avviene nella fase di analisi
+semantica nel processo di compilazione -- quindi dopo che è avvenuto il
+parsing -- una volta che è stato costruito l'albero di sintassi astratta
+(AST). Si ha così che il \emph{type checking} avviene esternamente
+all'albero di derivazione: questo viene infatti sottoposto a un
+controllo, dove per ogni sottoalbero viene valutato il tipo e nel nodo
+viene verificato che i tipi dei relativi sottoalberi combacino.
+
+In questo caso però, sia nel compilatore che nel parser, è stata usata
+una tecnica differente per cui l'albero di sintassi astratta è un
+\emph{Intrinsically Typed Data Structure}. Questo significa che l'albero
+è una struttura dati con tipo dipendente -- cioè il tipo non è fissato,
+ma è in relazione ai termini all'interno della struttura -- che permette
+di esprimere tutti e i soli programmi ben tipati. È quindi la struttura
+stessa che definisce che cosa è ben tipato: non c'è bisogno quindi di
+implementare un \emph{type checker} separato che analizzi l'albero,
+perché i vincoli di tipo sono già all'interno della definizione stessa
+dell'albero. Il \emph{type checking}, quindi, avviene direttamente nel
+momento della costruzione dell'albero, garantendo sempre la \emph{type
+safety}, ma in modo più immediato e con un'implementazione più semplice.
+
+Per implementare parser e compilatore, si è interessati quindi a
+implementare un \emph{Intrinsically Typed Data Structure} in
+\texttt{OCaml}: vediamo quindi gli strumenti che il linguaggio mette a
+disposizione.
+
+\hypertarget{generic-algebraic-data-type}{%
+\subsection{Generic Algebraic Data
+Type}\label{generic-algebraic-data-type}}
+
+Si parte cercando di capire che cosa è un \emph{Algebraic Data Type}
+(ADT) che \texttt{OCaml} permette di definire. Un ADT è un tipo composto
+definito tramite intersezione o unione disgiunta di altri tipi. È
+mostrato un esempio di ADT:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{type}\NormalTok{ expr =}
+\NormalTok{ | Int }\KeywordTok{of} \DataTypeTok{int}
+\NormalTok{ | Bool }\KeywordTok{of} \DataTypeTok{bool}
+\NormalTok{ | And }\KeywordTok{of} \DataTypeTok{exp}\NormalTok{ * expr}
+\NormalTok{ | Plus }\KeywordTok{of}\NormalTok{ expr * expr }
+\NormalTok{ | Eq }\KeywordTok{of}\NormalTok{ expr * expr}
+\end{Highlighting}
+\end{Shaded}
+
+In questo esempio un tipo \texttt{expr} può essere \texttt{Int} di un
+intero, \texttt{Bool} di un booleano oppure \texttt{Plus}, \texttt{And}
+o \texttt{Eq} di due altre \texttt{expr}. Si ha quindi un'unione
+disgiunta di vari costruttori (che sono \texttt{Int}, \texttt{Bool},
+\texttt{Plus}\ldots{}), e all'interno di alcuni sia un'intersezione, ad
+esempio all'interno di \texttt{Plus} che si ha una coppia di
+\texttt{expr}. Si nota però, che, sempre nell'esempio, l'espressione
+\texttt{And((Int\ 9),(Bool\ true))} è un'espressione che sebbene sia
+sintatticamente corretta, semanticamente non rappresenta un'espressione
+ben tipata: (l'\texttt{And} si può fare solo tra tipi booleani). È
+necessario, quindi che quando viene valuta l'espressione ci sia un
+controllo di tipo: la funzione che si preoccupa della valutazione
+sarebbe:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let} \KeywordTok{rec}\NormalTok{ eval : expr -> int_or_bool =}
+\KeywordTok{function}
+\NormalTok{ | Int n -> I n}
+\NormalTok{ | Bool b -> B b}
+\NormalTok{ | And(e1,e2) ->}
+\NormalTok{ (}\KeywordTok{match}\NormalTok{ eval e1, eval e2 }\KeywordTok{with}
+\NormalTok{    B n, B m -> B (n && m)}
+\NormalTok{    | _, _ -> }\DataTypeTok{raise}\NormalTok{ TypeError)}
+\NormalTok{ | ... }
+\end{Highlighting}
+\end{Shaded}
+
+In questo modo scrivendo \texttt{And((Int\ 9),(Bool\ true))} non si
+riscontrerebbe nessun errore a tempo di compilazione, ma se si cercasse
+di calcolare \texttt{eval\ (And((Int\ 9),(Bool\ true)))} allora sarebbe
+sollevata un'eccezione a tempo di esecuzione.
+
+Sempre con l'obiettivo di avere delle strutture
+\texttt{Intrinsically\ typed} si è interessati a un costrutto in cui la
+sintassi della struttura stessa possa permettere di scrivere espressioni
+solo ben tipate (il concetto stesso di ben tipato è in realtà definito
+dalla stessa struttura). \texttt{OCaml} infatti mette a disposizione
+anche \emph{Generalized Algebraic Data Type} (GADT), che come suggerisce
+il nome è la generalizzazione degli ADT. Come d'altronde era già
+permesso negli ADT i GADT permettono di definire dei tipi parametrici,
+ma in più si ha la possibilità di vincolare sintatticamente il parametro
+(tramite istanziazione) al tipo di ritorno dei costruttori del GADT (che
+dovrà essere specificato). Si ha quindi che ciascun costruttore è
+definito come una funzione tra tipi:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{type}\NormalTok{ 'a expr =}
+\NormalTok{| Int : }\DataTypeTok{int}\NormalTok{ -> }\DataTypeTok{int}\NormalTok{ expr}
+\NormalTok{| Bool : }\DataTypeTok{bool}\NormalTok{ -> }\DataTypeTok{bool}\NormalTok{ expr}
+\NormalTok{| And : }\DataTypeTok{bool}\NormalTok{ expr * }\DataTypeTok{bool}\NormalTok{ expr -> }\DataTypeTok{bool}\NormalTok{ expr}
+\NormalTok{| Plus : }\DataTypeTok{int}\NormalTok{ expr * }\DataTypeTok{int}\NormalTok{ expr -> }\DataTypeTok{int}\NormalTok{ expr}
+\NormalTok{| Eq : 'a expr * 'a expr -> }\DataTypeTok{bool}\NormalTok{ expr}
+\end{Highlighting}
+\end{Shaded}
+
+In questo esempio, quindi, l'espressione
+\texttt{And((Int\ 9),(Bool\ true))} risulterebbe mal tipata, in quanto
+non conforme alla struttura appena definita, dal momento che il
+costruttore \texttt{And} richiederebbe una coppia di espressioni
+booleane, ma il primo elemento della coppia \texttt{Int\ 9} è definito
+come un'espressione intera. Scrivendo infatti
+\texttt{And((Int\ 9),(Bool\ true))} in codice \texttt{OCaml}, sarebbe
+sollevato un errore sarebbe sollevato a tempo di compilazione. Definendo
+così il tipo \texttt{expr} anche la valutazione del tipo risulta più
+semplice rispetto all'analoga nel caso del ADT, infatti non ci si deve
+preoccupare di nessun controllo di tipo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let} \KeywordTok{rec}\NormalTok{ eval: : }\KeywordTok{type}\NormalTok{ a. a expr -> a =}
+\KeywordTok{function}
+\NormalTok{ | Int n -> n}
+\NormalTok{ | Bool b -> b}
+\NormalTok{ | And(e1,e2) -> e1 && e2}
+\NormalTok{ | ... }
+\end{Highlighting}
+\end{Shaded}
+
+Si ha quindi che la struttura del tipo \texttt{expr} definita con l'uso
+degli GADT vincola sintatticamente a scrivere espressioni ben tipate,
+ciò significa che \texttt{expr} è intrinsecamente tipata. Quindi
+l'implementazione dell'albero di sintassi astratta, sarà del tutto
+analoga a quella di \texttt{expr}, dove i costruttori, invece di essere
+relativi alle espressioni saranno relativi ai costrutti di un programma
+nel linguaggio.
+
+\hypertarget{conclusione}{%
+\subsection{Conclusione}\label{conclusione}}
+
+Si è quindi visto che i GADT permettono la definizione di
+\emph{Intrinsically Typed Data Structure}, usando questa tecnica
+nell'implementazione del parser e del compilatore in questione, si può
+quindi evitare di dover essere ridondanti nell'eseguire il type
+checking, avendo la certezza che il codice sia \emph{type safe}, ben
+tipato e con meno probabilità che si presentino bug.
 
 \hypertarget{scl}{%
-\subsection{Scl}\label{scl}}
+\section{Scl}\label{scl}}
 
-Scl è un linguaggio imperativo ad attori che permette di descrivere il
-comportamento di contratti e umani (cioè gli utenti che interagiscono
-sui contratti). Scl è un linguaggio usato per l'analisi di smart
-contract, quindi col fine di fare un analisi più mirata, semplice ed
-essenziale è stato reso volutamente minimale; nonostante ciò scl è un
-linguaggio Turing completo in quanto permette l'assegnamento,
-l'istruzione condizionale, l'invocazione di funzioni, la ricorsione e il
-sollevamento di eccezioni.
+\hypertarget{introduzione-2}{%
+\subsection{Introduzione}\label{introduzione-2}}
 
-Un programma scl consiste in una una configurazione, ovvero un insieme
-di attori (ovvero contratti o umani) che vengono definiti con i loro
-campi e i loro metodi, in maniera analoga ai linguaggi di programmazione
-con oggetti. Essendo un linguaggio ad attori si ha che ogni attore
-conosce tutti gli altri attori della configurazione, rendendo possibile
---per esempio-- che un umano chiami un metodo di uno specifico
-contratto, senza avere bisogno di parametri o campi aggiuntivi.
+In questa sezione si inizia a descrivere il parser, senza analizzare
+l'aspetto implementativo, ma fornendo una spiegazione a livello di
+specifiche di quello che fa il parser. Viene in un primo luogo descritto
+\texttt{scl}, il linguaggio verso il quale viene fatto il parsing, poi
+viene definita la grammatica che dà luogo a una sintassi per
+\texttt{scl}, e infine per tale grammatica si mostra il relativo albero
+di sintassi astratta generato dal parser.
 
-Sebbene siano due entità distinte, il codice di contratti e umani è
-molto simile, se non per il fatto che questi ultimi possono fallire
---sollevano dunque un'eccezione-- e hanno a disposizione l'operazione di
-scelta, che consiste un operatore non deterministico con il quale non si
-sa a priori quale codice l'umano andrà ad eseguire. L'idea è che nella
-realtà l'umano non ha un comportamento deterministico e quindi si devono
-prendere in considerazioni tutte le sue azioni possibili; questa diventa
-la parte interessante dell'analisi con scl in quanto si cerca di capire
-che comportamento sarà più vantaggioso per l'umano.
+\hypertarget{descrizione-linguaggio}{%
+\subsection{Descrizione linguaggio}\label{descrizione-linguaggio}}
 
-TODO: Mostrare esempio di codice smart calculus
+\texttt{Scl} è un linguaggio imperativo ad attori (come per esempio
+\texttt{Erlang}) che permette di descrivere il comportamento di
+contratti e umani -- cioè gli utenti che interagiscono sui contratti.
+\texttt{Scl} è un linguaggio usato per l'analisi di \emph{smart
+contract}, quindi con l'obiettivo di fare un'analisi più mirata,
+semplice ed essenziale è stato reso volutamente minimale. Nonostante ciò
+\texttt{scl} è un linguaggio Turing completo, in quanto permette
+l'assegnamento, l'istruzione condizionale, l'invocazione di funzioni, la
+ricorsione e il sollevamento di eccezioni.
 
-\hypertarget{analisi-lessicale}{%
-\subsection{Analisi lessicale}\label{analisi-lessicale}}
+Un programma \texttt{scl} consiste in una una configurazione, ovvero un
+insieme di attori (contratti o umani) che vengono definiti con campi e
+metodi, in maniera analoga ai linguaggi di programmazione a oggetti.
+Essendo un linguaggio ad attori si ha che ogni attore conosce tutti gli
+altri attori della configurazione, rendendo possibile -- per esempio --
+che un umano chiami un metodo di uno specifico contratto, senza avere
+bisogno di parametri o campi aggiuntivi.
 
-Il parser non può fare l'analisi sintattica direttamente sul testo in
-input, per iniziare deve avere in ingresso una sequenza di token, dove
-ogni token è una coppia nome valore, dove il nome rappresenta una
-determinata categoria sintattica, mentre il valore è una stringa del
-testo. Quindi per generare i token si inizia facendo l'analisi
-lessicale, dividendo le stringhe in input in diverse categorie di token.
+Sebbene siano due entità distinte, il codice di contratti e degli umani
+è molto simile, se non per il fatto che questi ultimi possono fallire
+--possono sollevare dunque un'eccezione -- e hanno a disposizione
+l'operazione di scelta, che consiste in un operatore non deterministico
+con il quale non si sa a priori quale codice l'umano andrà ad eseguire.
+L'idea è che nella realtà l'umano non ha un comportamento deterministico
+e quindi si devono prendere in considerazioni tutte le sue azioni
+possibili; questa diventa la parte interessante dell'analisi con
+\texttt{scl} , in quanto si cerca di capire che comportamento sarà più
+vantaggioso per l'umano. Inoltre per gli umani è necessario definire i
+comandi iniziali, che descrivono il loro comportamento e le loro
+interazioni con gli altri attori della configurazione.
 
-Con questo obiettivo si è usato il modulo \texttt{Genlex} di OCaml, che
-permette di generare un analizzatore lessicale che in OCaml consiste in
-una funzione che prende in input uno stream di caratteri e restituisce
-in output una lista di token. Inoltre questo strumento è particolarmente
-vantaggioso rispetto a un'analisi lessicale senza uso di moduli
-aggiuntivi, perché toglie la preoccupazione di fornire
-un'implementazione per l'aggiunta di commenti nel testo, così come
-diventa automatica la rimozione degli spazi bianchi tra le varie
-stringhe. I token quindi sono riconosciuti e ad ognuno è associato una
-categoria (o nome) che sono: interi, stringhe, identificativi e parole
-chiave, dove queste ultime richiedono di essere esplicitate.
-
-Concettualmente l'analizzatore sintattico richiederebbe uno stream di
-token, quindi ci si aspetterebbe che il parser implementato richieda un
-input del tipo \texttt{token\ Stream.t}. Infatti il tipo \texttt{Stream}
-di OCaml offrirebbe un vantaggio in termini di memorizzazione: non è
-necessario che tutta la sequenza di token sia in memoria, e sebbene
-l'analizzatore lessicale generato da \texttt{make\_lexer} --la funzione
-di \texttt{GenLex} che lo genera-- restituisca un tipo
-\texttt{token\ Stream.t}, è stato scelto di usare una lista di token.
-Questa è stata una scelta di natura implementativa: come sarà più chiaro
-successivamente, il parser ha bisogno di fare backtracking, e con gli
-\texttt{Stream} di OCaml l'operazione diventerebbe ardua siccome quando
-si esamina un elemento in uno stream, l'elemento precedente viene perso.
-Con la lista invece l'iterazione è molto più semplice e si può procedere
-in entrambe le direzioni senza preoccupazione.
+\texttt{Scl} però non prevede una vera e propria sintassi: se si vuole
+implementare un attore è necessario scrivere direttamente sulle
+strutture dati del linguaggio. Queste strutture dati sono già in
+partenza \emph{Intrinsically typed} siccome sono implementate in
+\texttt{OCaml} facendo uso dei GADT. Di conseguenza se si è interessati
+ad assegnare una sintassi al linguaggio, si può facilmente implementare
+il parser avendo come albero di sintassi astratta in output direttamente
+queste strutture, senza passare per una struttura intermedia. Si ha
+quindi un minor sforzo nella fase di implementazione, avendo comunque il
+vantaggio di non preoccuparsi di incorrere in errori di tipo durante il
+parsing, dal momento che la stessa struttura in output garantisce la
+\emph{type safety}.
 
 \hypertarget{grammatica}{%
 \subsection{Grammatica}\label{grammatica}}
 
-Una volta costruita la lista di token il parser deve cercare di
-costruire l'albero di sintassi astratta, che dovrà essere un albero di
-derivazione in una determinata grammatica per scl che necessita di
-essere definita. La definizione di questa sintassi è fondamentale in
-quanto costituisce l'utilità e lo scopo dello stesso parser: fornisce al
-programmatore una maniera di scrivere codice scl semplice e leggibile. È
-quindi necessario che la grammatica debba coprire tutti i costrutti del
-linguaggio scl, cercando di rimanere fedele e conforme alla sua
-struttura.
+Il parser verso \texttt{scl} deve cercare di costruire l'albero di
+sintassi astratta del testo in input, basandosi sulla sua grammatica
+specifica, la quale necessita di essere definita. La definizione di
+questa sintassi è fondamentale in quanto costituisce l'utilità e lo
+scopo dello stesso parser: fornisce al programmatore uno strumento per
+scrivere in modo semplice e leggibile un testo che diventerà codice
+\texttt{scl} . È quindi necessario che la grammatica debba coprire tutti
+i costrutti del linguaggio \texttt{scl}, cercando di rimanere fedele e
+conforme alla sua struttura, senza perdere di espressività.
 
 \begin{verbatim}
-configuration ::= act*
+configuration ::= "act" 
 act ::= (Human | Contract) ?( (Int) ) { decl* meth* }
 stm ::= decl | Var = ( (rhs) | rhs) | if e then stm else stm | stm stm 
         | stm + stm | { stm }
@@ -236,74 +443,213 @@ e ::= iexpr | bexpr | sexpr | cexpr | hexpr
 t ::= int | bool | string | Contract | Human
 \end{verbatim}
 
-\footnote{Sintassi per il parser, dove configuration è il simbolo
+\footnote{Sintassi per il parser, dove \emph{configuration} è il simbolo
   iniziale}
 
-In figura viene mostrata la grammatica dell'analizzatore sintattico,
-dove i simboli terminali sono i token generati nell'analisi lessicale:
-in figura che in figura vengono denominati Int (ovvero l'insieme dei
-numeri interi), String (l'insieme delle stringhe) e Var (l'insieme di
-tutte le variabili), a cui si aggiungono tutte le parole chiave (ad
-esempio return, if, +, \textgreater{}, \ldots{}) che devono essere
-specificate al lexer.
+In figura viene mostrata la grammatica su cui si basa l'analizzatore
+sintattico, nella quale sono presenti i simboli terminali che
+necessitano di essere riconosciuti durante l'analisi lessicale: che sono
+\texttt{Int} (ovvero l'insieme dei numeri interi), \texttt{String}
+(l'insieme delle stringhe) e \texttt{Var} (l'insieme di tutte le
+variabili), a cui si aggiungono tutte le parole chiave (ad esempio
+\texttt{return}, \texttt{if}, \texttt{+}, \texttt{\textgreater{}},
+\ldots{}) che devono essere specificate al lexer. Invece la parte di
+analisi sintattica, una volta riconosciuti i simboli terminali si
+preoccuperà di riconoscere i simboli non terminali e le opportune
+produzioni ricalcando la struttura del programma in input.
 
-Questa sintassi permette di definire un insieme di attori (a cui si può
-specificare il \texttt{balance} iniziale, equivalentemente ad un
-assegnamento), ognuno dei quali ha dei campi che devono essere
-dichiarati e una lista di metodi, che consistono in dichiarazione (con
-tipo in input e in output, dove quest'ultimo è sempre presente),
-statement (lista di comandi di assegnamento, istruzione condizionale e
-per gli umani scelta) e espressione di ritorno.
+Questa sintassi permette di definire un insieme di attori, ognuno dei
+quali ha sia dei campi, che devono essere dichiarati, che una lista di
+metodi. Questi ultimi sono composti da una firma (con tipo in input e in
+output, dove quest'ultimo è sempre presente), uno statement (consistente
+in una lista di comandi di assegnamento, o istruzione condizionale o,
+nel caso di attori umani, scelta) e espressione di ritorno.
+
+Particolarmente interessante è il fatto che nella dichiarazione
+dell'attore si può specificare tra \texttt{()} il \emph{balance}
+iniziale, ovvero i soldi che sono inizialmente assegnati al contratto o
+all'umano. Questo equivale a fare un assegnamento alla variabile intera
+denominata \texttt{balance}. È inoltre possibile inviare dei soldi al
+contratto nelle chiamate di funzioni semplicemente con la parola chiave
+\texttt{value} e specificando il valore.
 
 Si può facilmente notare che la grammatica scelta è ambigua, come viene
 mostrato in questo breve esempio di un assegnamento: \texttt{x\ =\ y}
-che nel contesto di uno statement
+che si sviluppa a partire dal non terminale \texttt{stm}
 
 \begin{verbatim}
-stm => Var = rhs => x = rhs => x = e =>
-
-Caso 1:
-    x = iexpr => x = y
-
-Caso 2: 
-    x = bexpr => x = y
+stm -> Var = rhs -> x = rhs -> x = e
 \end{verbatim}
 
-L'ambiguità è quindi dovuta al fatto che tutti i tipi di espressioni
-possono accettare indistintamente delle variabili, diventerebbe quindi
-necessario introdurre un sistema di tipi. Il sistema di tipi in realtà è
-già presente in scl, quindi l'unica cosa di cui si deve preoccupare il
-parser è di fare un controllo sui tipi, che in questo esempio diventa:
-se y è stata dichiarata come intera allora sono nel Caso 1 se invece è
-dichiarata come booleana sono nel Caso 2. Il controllo dei tipi verrà
-esaminato successivamente più in dettaglio.
+uno statement, quindi diventa un assegnamento di un'espressione a una
+variabile. L'espressione ora ha può avere due produzioni:
 
-TODO: Esempio con sintassi
-
-\hypertarget{implementazione-del-codice-con-parser-combinator}{%
-\subsection{Implementazione del codice con parser
-combinator}\label{implementazione-del-codice-con-parser-combinator}}
-
-Una volta definita la grammatica si hanno tutte le basi necessarie per
-l'implementazione OCaml del parser. Il parser può essere implementato
-con diverse tecniche: similmente a quanto fatto per l'analisi lessicale
-si possono usare librerie di OCaml che generano analizzatori sintattici,
-oppure si può usare la tecnica del parser combinator. In questo caso
-usata quest'ultima tecnica che consiste nel considerare un parser come
-una funzione di ordine superiore che avendo uno o più parser in input
-restituisce un nuovo parser. Dove a livello di codice un parser si
-intende una funzione che prende una lista di token e restituisce la
-lista rimanente di token e l'albero di derivazione generato.
+\textbf{Caso 1:} l'espressione generica diventa un'espressione intera
 
 \begin{verbatim}
-type 'ast parser = 
-token t -> (vartable * bool) -> token t * 'ast * (vartable * bool)
+x = iexpr -> x = y
 \end{verbatim}
+
+\textbf{Caso 2:} l'espressione generica diventa un'espressione booleana
+
+\begin{verbatim}
+x = bexpr -> x = y
+\end{verbatim}
+
+Si è visto che in entrambi i casi si è derivata la stessa sequenza
+partendo dallo stesso non terminale, ma con derivazioni diverse.
+L'ambiguità è quindi dovuta al fatto che diversi non terminali
+(tipicamente relativi alle espressioni) possono accettare
+indistintamente delle variabili a prescindere dal loro tipo. È
+necessario quindi che il parser quando incorre nel riconoscimento di una
+variabile riconosca direttamente il suo tipo. Successivamente si vedrà
+come viene affrontato il problema.
+
+\hypertarget{albero-di-sintassi-astratta-di-ritorno}{%
+\section{Albero di sintassi astratta di
+ritorno}\label{albero-di-sintassi-astratta-di-ritorno}}
+
+Dopo aver definito la grammatica è necessario mostrare l'albero di
+sintassi astratta generato come output dal parser, che rappresenterà la
+struttura logica del programma in input. Come si è detto precedentemente
+in questo caso l'albero di sintassi astratta corrisponde direttamente al
+codice \texttt{scl}. In figura viene mostrato il tipo di ritorno per la
+grammatica della figura precedente.
+
+\begin{verbatim}
+configuration ::= {contract: a_contract list, human: a_human list}
+a_contract ::= (Contract string, meth list, decl list)
+a_human ::= (Human string, meth list, decl list, stack)
+stack ::= Return (t,e) | SComp(Stm stm, stack)
+stm ::= Assign (var,e) | IfThenElse (e,stm,stm) | Comp (stm,stm) |
+        Choice(stm,stm)
+decl ::= Let((t,string),v)
+program ::= meth,(vlist,stm,e)
+meth ::= (t,tlist,string)
+rhs ::= Expr e | Call (e,meth,elist) | CallWithValue (e,meth,elist,int)
+var ::= (t,string)
+v ::= int | bool | string | Contract string | Human string
+e ::= Value v | Var var | Fail | This | Field var |
+      Plus (e,e) | Mult (e,e) | Minus e | Max(e,e) | Geq(e,e)
+      | Gt(e,e) | Eq(t,e,e) | And(e,e) | Or (e,e) | Not e |
+      Symbol string
+elist ::= ENil | ECons (e,elist)
+tlist ::= TNil | TCons (t,tlist)
+vlist ::= VNil | VCons (var,vlist)
+
+t ::= Int | Bool | String | ContractAddress | HumanAddress
+\end{verbatim}
+
+Come si può notare la grammatica definita precedentemente rimane molto
+conforme all'albero di sintassi astratta. Infatti ai simboli non
+terminali della grammatica sono fatti corrispondere i nodi dell'albero,
+e ai simboli terminali invece sono fatte corrispondere le foglie: si può
+quindi presupporre che ci sia una certa associazione tra albero di
+sintassi astratta e grammatica. Ciò che deve fare il parser è avendo un
+testo in input, in un primo luogo riconoscere passo per passo il testo
+nella grammatica, e nel mentre, sulla base di questa associazione
+costruire l'albero di sintassi astratta.
+
+\hypertarget{conclusione-1}{%
+\subsection{Conclusione}\label{conclusione-1}}
+
+È stato quindi mostrato la forma del testo in input e del relativo
+albero di derivazione in output nel parser, dove quest'ultimo non è
+stato definito dall'attività di costruzione del parser, ma era già
+presente in precedenza nelle strutture del linguaggio.
+
+\hypertarget{implementazione-del-parser}{%
+\section{Implementazione del parser}\label{implementazione-del-parser}}
+
+\hypertarget{introduzione-3}{%
+\subsection{Introduzione}\label{introduzione-3}}
+
+In questa sezione ci si concentra sull'implementazione del parser verso
+\texttt{scl}. Vengono quindi descritte le tecniche e le scelte
+implementative che portano il parser a prendere in input una lista di
+caratteri e determinarne la correttezza basandosi sulla grammatica,
+generando quindi il relativo albero di sintassi astratta per tale lista.
+
+Il parser in considerazione è implementato in \texttt{OCaml}, questa
+scelta risulta abbastanza ovvia dal momento che lo stesso \texttt{scl} è
+implementato in questo linguaggio.
+
+\hypertarget{analisi-lessicale}{%
+\subsection{Analisi lessicale}\label{analisi-lessicale}}
+
+Il parser non può fare l'analisi sintattica direttamente sul testo in
+input: per iniziare deve avere in ingresso una sequenza di token. Ogni
+token è una coppia nome-valore, dove il nome rappresenta una determinata
+categoria sintattica, mentre il valore è una stringa del testo. Quindi
+per generare i token si inizia facendo l'analisi lessicale, dividendo le
+stringhe in input in diverse categorie (le categorie sintattiche,
+appunto).
+
+Con questo obiettivo si è usato il modulo \texttt{Genlex} di
+\texttt{OCaml}, che permette di generare un analizzatore lessicale che
+in \texttt{OCaml} consiste in una funzione che prende in input uno
+stream di caratteri e restituisce in output una lista di token. Inoltre
+questo strumento è particolarmente vantaggioso rispetto a un'analisi
+lessicale senza uso di moduli aggiuntivi, perché toglie la
+preoccupazione di fornire un'implementazione per l'aggiunta di commenti
+nel testo, così come diventa automatica la rimozione degli spazi bianchi
+tra le varie stringhe. I token quindi sono riconosciuti e ad ognuno di
+essi è associato una categoria (o nome). Le possibili categorie sono:
+interi, stringhe, identificativi e parole chiave. Mentre interi,
+stringhe e identificativi sono già noti al lexer, perché sono
+caratteristici di tutti i linguaggi, le parole chiave richiedono di
+essere esplicitate, perché sono specifiche del lessico del linguaggio di
+cui fare il parsing.
+
+Concettualmente l'analizzatore sintattico richiederebbe uno stream di
+token, quindi ci si aspetterebbe che il parser implementato richieda un
+input del tipo \texttt{token\ Stream.t}. Infatti il tipo \texttt{Stream}
+di \texttt{OCaml} offrirebbe un vantaggio in termini di memorizzazione:
+non è necessario che tutta la sequenza di token sia in memoria, e
+sebbene l'analizzatore lessicale generato da \texttt{make\_lexer} --la
+funzione di \texttt{GenLex} che lo genera-- restituisca un tipo
+\texttt{token\ Stream.t}, è stato scelto di usare una lista di token.
+Questa è stata una scelta di natura implementativa: come sarà più chiaro
+successivamente, il parser ha bisogno di fare backtracking, e con gli
+\texttt{Stream} di \texttt{OCaml} l'operazione diventerebbe ardua
+siccome quando si esamina un elemento in uno stream, l'elemento
+precedente viene perso. Con la lista invece l'iterazione è molto più
+semplice e si può procedere in entrambe le direzioni senza
+preoccupazione.
+
+L'analisi lessicale, quindi, relativamente alla grammatica consiste nel
+riconoscere i simboli terminali come tali, in modo che successivamente
+ci si concentri separatamente nel riconoscimento delle produzioni della
+grammatica.
+
+\hypertarget{implementazione-con-parser-combinator}{%
+\subsection{Implementazione con parser
+combinator}\label{implementazione-con-parser-combinator}}
+
+Una volta definita la grammatica e riconosciuti i simboli terminali di
+questa si hanno tutte le basi necessarie per l'implementazione
+\texttt{OCaml} del parser. Il parser può essere implementato con diverse
+tecniche: similmente a quanto fatto per l'analisi lessicale si
+potrebbero usare librerie di parsing che generano analizzatori
+sintattici, oppure si può usare la tecnica del parser combinator. In
+questo caso è stata preferita quest'ultima tecnica, che consiste nel
+considerare un parser come una funzione di ordine superiore che avendo
+uno o più parser in input restituisce un nuovo parser (da qui il nome).
+A livello di codice per parser si intende una funzione che prende una
+lista di token e restituisce l'albero di derivazione e la lista dei
+token rimanenti.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{type}\NormalTok{ 'ast }\KeywordTok{parser}\NormalTok{ = }
+\NormalTok{token t -> (vartable * }\DataTypeTok{bool}\NormalTok{) -> token t * 'ast * (vartable * }\DataTypeTok{bool}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \footnote{Definizione del tipo parser nel caso discusso. Nell'input e
-  nell'output del parser si hanno inoltre una tabella che contiene i
-  campi dichiarati e un tipo boolean per distinguere se l'attore di cui
-  si sta facendo il parsing sia umano o contratto}
+  nell'output del parser si hanno in aggiunta anche una tabella che
+  contiene i campi dichiarati e un booleano per distinguere se l'attore
+  di cui si sta facendo il parsing sia umano o contratto}
 
 Per l'implementazione è necessario definire un'eccezione che ogni
 funzione \texttt{parser} solleverà qualora non dovesse essere in grado
@@ -312,90 +658,232 @@ di riconoscere l'input, questa eccezione è stata denominata
 
 Con l'ausilio dei parser combinator si possono tradurre facilmente le
 produzioni della grammatica definita in precedenza: innanzitutto è
-necessario descrivere gli operatori sintattici in questione ovvero come
-la concatenazione, la stella di Kleene, l'unione, la costante e la
-possibilità. L'implementazione di ogni operatore risulta semplice, ad
+necessario descrivere gli operatori sintattici necessari, ovvero la
+concatenazione, la stella di Kleene, l'unione, la costante e l'operatore
+possibilità. L'implementazione di ogni operatore risulta semplice: ad
 ognuno di questi è fatta corrispondere una funzione, che nella logica
-dei parser combinator mi genera nuovi parser, per l'operatore costante
---che riconosce i simboli terminali-- viene generato un parser che
-verifica se il simbolo richiesto corrisponde al simbolo in input, per
-l'unione si hanno due parser in input e in maniera non deterministica si
-deve scegliere il parser che esegue, e nel caso venga sollevata la
-\texttt{Fail} si fa backtracking e sceglie il parser rimanente, la
-concatenazione invece consiste nel prendere in input due parser e
-eseguirli sequenzialmente unendo successivamente i due output, la stella
-di Kleene vede l'esecuzione dello stesso parser finché questo non
-solleva una \texttt{Fail} --caso per cui l'esecuzione dell'operatore
-termina-- infine all'operatore di possibilità corrisponde un parser che
-semplicemente prevede che possa fallire.
+dei parser combinator genera un nuovo parser specifico per l'operatore
+in questione. Questi parser verranno poi composti tra loro, secondo le
+regole della grammatica, per riuscire a riconoscere una qualsiasi
+produzione.
 
-\begin{verbatim}
-let const : token -> (token -> 'ast) -> 'ast parser =
- fun t1 f t2 tbl ->
-  if (List.length t2 > 0) && (t1 = (List.hd t2)) then
-   (junk t2), f t1, tbl
-  else
-   raise Fail
+Per l'operatore costante --che riconosce i simboli terminali-- viene
+generato un parser che verifica se il simbolo richiesto corrisponde al
+simbolo in input: nel caso in cui questo succeda l'input può essere
+consumato:
 
-let choice : 'ast parser -> 'ast parser -> 'ast parser
-= fun p1 p2 s tbl ->
- try p1 s tbl with Fail -> p2 s tbl
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let}\NormalTok{ const : token -> (token -> 'ast) -> 'ast }\KeywordTok{parser}\NormalTok{ =}
+ \KeywordTok{fun}\NormalTok{ t1 f t2 tbl ->}
+  \KeywordTok{if}\NormalTok{ (}\DataTypeTok{List}\NormalTok{.length t2 > }\DecValTok{0}\NormalTok{) && (t1 = (}\DataTypeTok{List}\NormalTok{.hd t2)) }\KeywordTok{then}
+\NormalTok{   (junk t2), f t1, tbl}
+  \KeywordTok{else}
+   \DataTypeTok{raise}\NormalTok{ Fail}
+\end{Highlighting}
+\end{Shaded}
 
-let concat : 
-'ast1 parser -> 'ast2 parser -> ('ast1 -> 'ast2 -> 'ast3) -> 'ast3 parser = 
-fun p1 p2 f s tbl ->
-  let rest1,ast1,tbl1 = p1 s tbl in
-  let rest2,ast2,tbl2 = p2 rest1 tbl1 in
-  rest2,f ast1 ast2,tbl2
+Per l'operatore di unione sono necessari due parser in input. Per
+implementare l'idea di scelta non deterministica viene eseguito il primo
+parser: nel caso questo sollevi \texttt{Fail} facendo backtracking viene
+eseguito il parser rimanente:
 
-let kleenestar : 
-'ast2 parser -> 'ast1 -> ('ast1 -> 'ast2 -> 'ast1) -> 'ast1 parser =
- fun p empty_ast f s t ->
-  let rec aux p1 s1 acc tbl=
-  try
-   let (rest1, ast1, ntbl) = p1 s1 tbl in
-   aux p1 rest1 (f acc ast1) ntbl
-  with Fail -> (s1, acc, tbl)
-  in aux p s empty_ast t
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let}\NormalTok{ choice : 'ast }\KeywordTok{parser}\NormalTok{ -> 'ast }\KeywordTok{parser}\NormalTok{ -> 'ast }\KeywordTok{parser}
+\NormalTok{= }\KeywordTok{fun}\NormalTok{ p1 p2 s tbl ->}
+ \KeywordTok{try}\NormalTok{ p1 s tbl }\KeywordTok{with}\NormalTok{ Fail -> p2 s tbl}
+\end{Highlighting}
+\end{Shaded}
 
-let option : 'ast parser -> 'ast option parser =
- fun p s tbl -> try
-  let next,res,ntbl = p s tbl in next,Some res,ntbl
- with Fail -> s,None,tbl
-\end{verbatim}
+La concatenazione invece consiste nel prendere in input due parser e
+eseguirli sequenzialmente unendo successivamente i due output:
 
-{[}Implementazione in codice OCaml dei parser per gli operatori
-sintattici{]}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let}\NormalTok{ concat : }
+\NormalTok{'ast1 }\KeywordTok{parser}\NormalTok{ -> 'ast2 }\KeywordTok{parser}\NormalTok{ -> ('ast1 -> 'ast2 -> 'ast3) -> 'ast3 }\KeywordTok{parser}\NormalTok{ = }
+\KeywordTok{fun}\NormalTok{ p1 p2 f s tbl ->}
+  \KeywordTok{let}\NormalTok{ rest1,ast1,tbl1 = p1 s tbl }\KeywordTok{in}
+  \KeywordTok{let}\NormalTok{ rest2,ast2,tbl2 = p2 rest1 tbl1 }\KeywordTok{in}
+\NormalTok{  rest2,f ast1 ast2,tbl2}
+\end{Highlighting}
+\end{Shaded}
 
-Dopo aver definito questi operatori diventa banale scrivere un parser
-per ogni non terminale della grammatica: basta combinare tra loro questi
-operatori coerentemente con quanto definito dalle produzioni della
-grammatica.
+La stella di Kleene vede l'esecuzione dello stesso parser finché questo
+non solleva \texttt{Fail} --caso per cui l'esecuzione dell'operatore
+termina:
 
-Quindi con l'ausilio dei parser combinator si ha un parser LL(1), di
-conseguenza è top-down, quindi inizia a costruire l'albero dalla radice,
-cioè definisce inizialmente una configuration vuota che verrà riempita
-dall'attività dell'analizzatore sintattico, l'input viene consumato da
-sinistra a destra e con solo un simbolo di lookahead, che significa che
-il parser prende in considerazione solo un token alla volta. Il
-problema, ora, è che la grammatica non è LL(1), perché, come visto in
-precedenza, presenta delle ambiguità e in più è ricorsiva sinistra,
-infatti se il parser cercasse di risolvere con la ricorsione sinistra
-l'esecuzione andrebbe in loop infinito. Sarà quindi necessario eliminare
-ricorsione sinistra e ambiguità.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let}\NormalTok{ kleenestar : }
+\NormalTok{'ast2 }\KeywordTok{parser}\NormalTok{ -> 'ast1 -> ('ast1 -> 'ast2 -> 'ast1) -> 'ast1 }\KeywordTok{parser}\NormalTok{ =}
+ \KeywordTok{fun}\NormalTok{ p empty_ast f s t ->}
+  \KeywordTok{let} \KeywordTok{rec}\NormalTok{ aux p1 s1 acc tbl=}
+  \KeywordTok{try}
+   \KeywordTok{let}\NormalTok{ (rest1, ast1, ntbl) = p1 s1 tbl }\KeywordTok{in}
+\NormalTok{   aux p1 rest1 (f acc ast1) ntbl}
+  \KeywordTok{with}\NormalTok{ Fail -> (s1, acc, tbl)}
+  \KeywordTok{in}\NormalTok{ aux p s empty_ast t}
+\end{Highlighting}
+\end{Shaded}
+
+Per concludere, l'operatore di possibilità corrisponde un parser che
+semplicemente prevede che possa fallire:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let} \DataTypeTok{option}\NormalTok{ : 'ast }\KeywordTok{parser}\NormalTok{ -> 'ast }\DataTypeTok{option} \KeywordTok{parser}\NormalTok{ =}
+ \KeywordTok{fun}\NormalTok{ p s tbl -> }\KeywordTok{try}
+  \KeywordTok{let}\NormalTok{ next,res,ntbl = p s tbl }\KeywordTok{in}\NormalTok{ next,}\DataTypeTok{Some}\NormalTok{ res,ntbl}
+ \KeywordTok{with}\NormalTok{ Fail -> s,}\DataTypeTok{None}\NormalTok{,tbl}
+\end{Highlighting}
+\end{Shaded}
+
+Dopo aver definito questi operatori diventa banale scrivere il parser.
+Ad ogni non terminale della grammatica viene costruita una nuova
+funzione di tipo \texttt{parser}, costituita dalla corretta composizione
+delle funzioni di parsing appena descritte, coerentemente con quanto
+definito dalle regole della grammatica. Degli esempi li si avranno
+successivamente.
+
+Si è quindi spiegato come il parser riesce a riconoscere la grammatica e
+si è visto che le funzioni per gli operatori sintattici implementati con
+la logica dei parser combinator prendono in input funzioni per la
+costruzione dell'albero di sintassi astratta.
+
+\hypertarget{costruzione-dellalbero-di-sintassi-astratta}{%
+\subsection{Costruzione dell'albero di sintassi
+astratta}\label{costruzione-dellalbero-di-sintassi-astratta}}
+
+Come spiegato nel capitolo precedente tra la grammatica e l'albero di
+sintassi astratta per tale grammatica si ha un'associazione abbastanza
+diretta, quindi mentre si riconduce il testo alle produzioni della
+grammatica è abbastanza immediato costruire l'albero relativo. Vediamo
+infatti nel caso atomico, una volta riconosciuto il token è abbastanza
+immediato costruire la foglia:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let}\NormalTok{ value : }\KeywordTok{type}\NormalTok{ a. a tag -> token -> a expr = }\KeywordTok{fun}\NormalTok{ tag tok ->}
+ \KeywordTok{match}\NormalTok{ tag,tok }\KeywordTok{with}
+\NormalTok{ | }\DataTypeTok{String}\NormalTok{,}\DataTypeTok{Genlex}\NormalTok{.}\DataTypeTok{String}\NormalTok{ x -> Value x}
+\NormalTok{ | Int,Int x -> Value x}
+\NormalTok{ | Bool,Kwd }\StringTok{"true"}\NormalTok{ -> Value }\KeywordTok{true}
+\NormalTok{ | Bool,Kwd }\StringTok{"false"}\NormalTok{ -> Value }\KeywordTok{false}
+\NormalTok{ | _ -> }\DataTypeTok{raise}\NormalTok{ Fail}
+
+\KeywordTok{let}\NormalTok{ value_pars tag s = const (}\DataTypeTok{List}\NormalTok{.hd s) (value tag) s}
+\end{Highlighting}
+\end{Shaded}
+
+Nell'esempio \texttt{value\_pars} è il parser per il non terminale
+\texttt{v} della grammatica, senza le regole con \texttt{contr\_addr} e
+\texttt{hum\_addr}. Si tratta infatti semplicemente di passare da un
+token a un'espressione in \texttt{scl}.
+
+Nel caso invece della costruzione di un nodo dell'albero, nel quale due
+\texttt{parser} sono combinati, può essere necessario fare un controllo
+sul tipo. Infatti si è visto che essendo l'albero di sintassi astratta
+una \emph{Intrinsically Typed Data Structure} non si può incorre in
+problemi di tipo. Quindi al momento della costruzione della struttura, è
+necessario fare il \emph{type checking} in modo che i costruttori del
+GADT abbiano la certezza che i tipi combacino. Ad esempio in
+\texttt{scl} è definito un costruttore in questo modo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{type}\NormalTok{ stm =}
+\NormalTok{ | Assign : 'a field * 'a rhs -> stm}
+\NormalTok{ | ...}
+\end{Highlighting}
+\end{Shaded}
+
+Quindi una volta che si ha un \texttt{field} e un \texttt{rhs}, per
+costruire il relativo \texttt{Assign} è necessario controllare che
+\texttt{field} e \texttt{rhs} abbiano lo stesso tipo. Sempre secondo la
+logica dei GADT è stato definito il tipo delle prove:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{type}\NormalTok{ (_,_) eq = Refl : ('a,'a) eq}
+\end{Highlighting}
+\end{Shaded}
+
+Usando questo particolare tipo è poi possibile implementare una funzione
+che controlli e assicuri che due tipi combacino:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let}\NormalTok{ eq_tag : }\KeywordTok{type}\NormalTok{ a b. a tag -> b tag -> (a,b) eq }\DataTypeTok{option}\NormalTok{ = }\KeywordTok{fun}\NormalTok{ t1 t2 ->}
+ \KeywordTok{match}\NormalTok{ t1,t2 }\KeywordTok{with}
+\NormalTok{ | Int, Int -> }\DataTypeTok{Some}\NormalTok{ Refl}
+\NormalTok{ | Bool, Bool -> }\DataTypeTok{Some}\NormalTok{ Refl}
+\NormalTok{ | }\DataTypeTok{String}\NormalTok{, }\DataTypeTok{String}\NormalTok{ -> }\DataTypeTok{Some}\NormalTok{ Refl}
+\NormalTok{ | ContractAddress, ContractAddress -> }\DataTypeTok{Some}\NormalTok{ Refl}
+\NormalTok{ | HumanAddress, HumanAddress -> }\DataTypeTok{Some}\NormalTok{ Refl}
+\NormalTok{ | _,_ -> }\DataTypeTok{None}
+\end{Highlighting}
+\end{Shaded}
+
+Una volta che si ha a disposizione la funzione \texttt{eq\_tag} diventa
+possibile implementare un parser l'assegnamento, quindi che generi un
+\texttt{Assign} combinando il risultato dei parser che riconoscono
+\texttt{field} e \texttt{rhs}, e controllando che il tipo di ritorno dei
+due parser sia il medesimo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let}\NormalTok{ assign_pars =}
+\NormalTok{ concat (concat field_pars (kwd }\StringTok{"="}\NormalTok{) }\DataTypeTok{fst}\NormalTok{) rhs_pars}
+\NormalTok{ (}\KeywordTok{fun}\NormalTok{ (AnyField(tfield,name)) (AnyRhs(trhs,r))-> }
+ \KeywordTok{match}\NormalTok{ eq_tag tfield trhs }\KeywordTok{with}
+\NormalTok{ | }\DataTypeTok{Some}\NormalTok{ Refl -> Assign((tfield,name),r)}
+\NormalTok{ | }\DataTypeTok{None}\NormalTok{ -> }\DataTypeTok{raise}\NormalTok{ Fail)}
+\end{Highlighting}
+\end{Shaded}
+
+Nell'esempio si ha una funzione \texttt{parser} in cui è esplicitata la
+forma sintattica che deve avere un assegnamento (si veda l'analogia
+nell'assegnamento nella grammatica) ed è specificato come viene
+costruito l'albero di derivazione. In questo caso \texttt{AnyField} e
+\texttt{AnyRhs} sono una specie di capsule che contengono
+rispettivamente il valore del campo e del \emph{rhs} con il rispettivo
+tipo. Questi infatti sono il risultato dei parser \texttt{field\_pars} e
+\texttt{rhs\_pars}, che in \texttt{assign\_pars} vengono combinati
+generando un nuovo nodo \texttt{Assign} nell'albero sintattico.
+
+Analogamente a quanto è avvenuto in questi due casi può essere costruito
+ogni nodo o foglia dell'albero.
+
+Si è quindi visto che con l'ausilio dei parser combinator il parser
+generato è top-down, cioè che inizia a costruire l'albero dalla radice.
+Definisce inizialmente una \emph{configuration} vuota (il simbolo
+iniziale) che verrà riempita dall'attività dell'analizzatore sintattico.
+In questo tipo di parsing l'input viene consumato da sinistra a destra
+con solo un simbolo di lookahead -- che se non viene riconosciuto
+implica il backtracing. Sebbene il parsing abbia i requisiti per essere
+di tipo LL(1) la grammatica in realtà non lo è. Questo perché, come
+visto in precedenza, presenta delle ambiguità; in aggiunta la grammatica
+è ricorsiva sinistra, infatti se il parser cercasse di risolvere una
+regola con la ricorsione sinistra l'esecuzione andrebbe in loop
+infinito. È quindi necessario risolvere questi problemi, eliminando la
+ricorsione sinistra e le ambiguità.
 
 \hypertarget{eliminazione-ricorsione-sinistra}{%
 \subsection{Eliminazione ricorsione
 sinistra}\label{eliminazione-ricorsione-sinistra}}
 
 Per eliminare la ricorsione sinistra bisogna prima agire sulla
-grammatica senza andarne a cambiare la sintassi e poi andare a
-trascrivere il relativo codice del parser. Si prenderà in considerazione
-soltanto il caso dell'eliminazione nel non terminale \texttt{iexpr}, per
-gli altri non terminali la risoluzione è analoga. Concettualmente si
-dividono in due non terminali le produzioni senza ricorsione sinistra da
-quelle in cui è presente, che chiameremo rispettivamente
-\texttt{atomic\_iexpr} e \texttt{cont\_iexpr} in questo modo
+grammatica senza andarne a cambiare il linguaggio generato e poi andare
+a trascrivere il relativo codice del parser. Verrà mostrato soltanto il
+caso dell'eliminazione nel non terminale \texttt{iexpr} (connotazione
+per le espressioni intere), per gli altri non terminali la risoluzione è
+analoga. Concettualmente al non terminale vengono aggiunti i due non
+terminali, il primo con le regole senza ricorsione sinistra il secondo
+con le regole in cui è presente. I due non terminali vengono
+rispettivamente \texttt{atomic\_iexpr} e \texttt{cont\_iexpr}, e vengono
+definiti in questo modo:
 
 \begin{verbatim}
 atomic_iexpr ::= Int | Var | fail | "-" iexpr | max iexpr iexpr 
@@ -403,79 +891,78 @@ atomic_iexpr ::= Int | Var | fail | "-" iexpr | max iexpr iexpr
 cont_iexpr ::= "+" iexpr | "-" iexpr | "*" iexpr 
 \end{verbatim}
 
-Rimane quindi solo da definire \texttt{iexpr} che è semplicemente
+In questo esempio \texttt{atomic\_iexpr} rappresenta un non terminale
+per alcune espressioni intere (appunto quelle atomiche), mentre
+\texttt{cont\_iexpr} considerato singolarmente non ha alcuna valenza:
+deve essere concatenato a un'espressione intera, che sarà quindi
+\texttt{atomic\_iexpr}. Il non terminale \texttt{iexpr} avrà quindi la
+seguente definizione:
 
 \begin{verbatim}
 iexpr ::= atomic_iexpr (cont_iexpr)?
 \end{verbatim}
 
-E adesso per la trascrizione nel codice OCaml si tratta solo di
-trascrivere quanto definito componendo i parser già definiti
+Una volta eliminata la ricorsione sinistra a livello di sintassi,
+l'implementazione consiste banalmente nel trascrivere quanto definito,
+ancora una volta come composizione di parser.
 
-\begin{verbatim}
-let rec atomic_int_expr s =
- choice_list [
-   comb_parser (base Int) (fun expr -> AnyExpr(Int,expr));
-   concat (kwd "-") atomic_int_expr (fun _ -> minus) ;
-   concat (concat (kwd "(") int_expr scd) (kwd ")") fst ;
-   concat (concat (kwd "max") int_expr scd) int_expr max;
-   concat (kwd "symbol") symbol_pars scd;
- ] s
-and int_expr s =
- concat atomic_int_expr (option cont_int_expr)
- (fun x f -> match f with Some funct -> funct x | _ -> x) s
-and binop s =
- choice_list [
-  const (Kwd "+") (fun _ -> plus) ;
-  const (Kwd "*") (fun _ -> mult) ;
-  const (Kwd "-") (fun _ -> subtract)
- ] s
-and cont_int_expr s = concat binop int_expr (fun f x -> f x) s
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let} \KeywordTok{rec}\NormalTok{ atomic_int_expr s =}
+\NormalTok{ choice_list [}
+\NormalTok{   comb_parser (base Int) (}\KeywordTok{fun}\NormalTok{ expr -> AnyExpr(Int,expr));}
+\NormalTok{   concat (kwd }\StringTok{"-"}\NormalTok{) atomic_int_expr (}\KeywordTok{fun}\NormalTok{ _ -> minus) ;}
+\NormalTok{   concat (concat (kwd }\StringTok{"("}\NormalTok{) int_expr scd) (kwd }\StringTok{")"}\NormalTok{) }\DataTypeTok{fst}\NormalTok{ ;}
+\NormalTok{   concat (concat (kwd }\StringTok{"max"}\NormalTok{) int_expr scd) int_expr }\DataTypeTok{max}\NormalTok{;}
+\NormalTok{   concat (kwd }\StringTok{"symbol"}\NormalTok{) symbol_pars scd;}
+\NormalTok{ ] s}
+\KeywordTok{and}\NormalTok{ int_expr s =}
+\NormalTok{ concat atomic_int_expr (}\DataTypeTok{option}\NormalTok{ cont_int_expr)}
+\NormalTok{ (}\KeywordTok{fun}\NormalTok{ x f -> }\KeywordTok{match}\NormalTok{ f }\KeywordTok{with} \DataTypeTok{Some}\NormalTok{ funct -> funct x | _ -> x) s}
+\KeywordTok{and}\NormalTok{ binop s =}
+\NormalTok{ choice_list [}
+\NormalTok{  const (Kwd }\StringTok{"+"}\NormalTok{) (}\KeywordTok{fun}\NormalTok{ _ -> plus) ;}
+\NormalTok{  const (Kwd }\StringTok{"*"}\NormalTok{) (}\KeywordTok{fun}\NormalTok{ _ -> mult) ;}
+\NormalTok{  const (Kwd }\StringTok{"-"}\NormalTok{) (}\KeywordTok{fun}\NormalTok{ _ -> subtract)}
+\NormalTok{ ] s}
+\KeywordTok{and}\NormalTok{ cont_int_expr s = concat binop int_expr (}\KeywordTok{fun}\NormalTok{ f x -> f x) s}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{controllo-dei-tipi-e-tabella-delle-variabili}{%
 \subsection{Controllo dei tipi e tabella delle
 variabili}\label{controllo-dei-tipi-e-tabella-delle-variabili}}
 
 Come mostrato in precedenza le ambiguità della grammatica, stando alla
-sua definizione, sono dovute al fatto che in espressioni di tipo diverso
-può comparire la stessa variabile. Questo però è solo vero a livello di
-grammatica, invece il codice scl ha un sistema di tipi per cui
-ovviamente non è possibile che compaia una variabile di un determinato
-tipo in un'espressione di un altro tipo. Compito del parser comunque è
-di verificare che i tipi siano coerenti tra di loro in modo da essere in
-grado di generare il codice scl. Ciò che invece è possibile nel
-linguaggio scl è che siccome le variabili sono una coppia tipo-nome,
-allora due variabili diverse possono lo stesso nome. Ovviamente si è
-interessati a una sintassi per cui non si debba specificare il tipo ogni
-volta che venga usata la variabile, si vuole quindi che solo il nome sia
-l'identificativo per la variabile (non esisteranno quindi due variabili
-con nome diverso) e che il tipo gli venga assegnato al momento della
-dichiarazione, e rimanga associato al nome nel suo scope.
+sua definizione, sono dovute al fatto che in non terminali che connotano
+espressioni di tipo diverso può comparire la stessa variabile. Per
+eliminare l'ambiguità è necessario, quindi, che in ogni espressione se è
+presenta una variabile già si conosca il tipo di quest'ultima. Questo
+obiettivo può essere conseguito in due modi per cui o ad ogni occorrenza
+della variabile si specifica sia il tipo che il nome, oppure si
+specifica solo il nome della variabile e il parser può leggere i valori
+in una tabella in cui è associata ad ogni nome di variabile il suo tipo.
+Siccome si preferisce che solo il nome sia identificativo per la
+variabile (come avviene in quasi tutti i linguaggi di programmazione) si
+sceglie la seconda opzione. Di conseguenza all'interno del programma su
+cui effettuare il parser non potranno mai esistere due variabili
+diverse, ma con lo stesso tipo, cosa che in realtà è possibile nella
+struttura degli attori in \texttt{scl}.
 
-Viene allora introdotta una tabella per ogni attore che contiene la
-lista delle coppie tipo-nome di tutte le sue variabili. Questa tabella
-contiene informazioni necessarie al parser per tutta la sua analisi e
-che lo stesso parser può modificare, allora come mostrato in figura ogni
-oggetto di tipo \texttt{parser} deve avere questa tabella in input e in
-output. Si ricorda che non è possibile avere una tabella come una
-variabile globale poiché OCaml è un linguaggio funzionale e le variabili
-non possono cambiare il loro contenuto.
-
-Le operazioni che chiamano in causa le variabili sono le dichiarazioni,
-l'assegnamento e le espressioni. Nelle dichiarazioni è necessario
-specificare il tipo di variabile, quindi ad ogni dichiarazione viene
-aggiunta una variabile con il tipo specificato nella tabella, se è già
-presente una variabile dichiarata con quel nome allora viene sollevato
-\texttt{Fail}. Nell'assegnamento si ha che l-valore è una variabile dove
-non viene specificato il tipo, viene quindi fatta ricerca nella tabella
-per determinare il tipo della variabile, una volta determinato viene
-fatto il parsing del r-valore e viene controllato se il tipo di
-quest'ultimo combacia col tipo della variabile. Però può essere che
-l-valore non sia stato dichiarato, in questo caso si è deciso che venga
-valutato solo r-valore e che poi la variabile del l-valore venga
-aggiunta alla tabella col tipo del r-valore. Nel caso ci fosse una
-variabile in un'espressione {[}\ldots{}{]}
+La tabella, chiamata quindi tabella dei simboli, è quindi relativa a un
+attore e contiene la lista delle coppie tipo-nome di tutte le sue
+variabili. Essendo \texttt{OCaml} un linguaggio funzionale, non può
+essere che la tabella sia una variabile globale, altrimenti non potrebbe
+essere modificabile. È necessario quindi che la stessa funzione di tipo
+\texttt{parser} richieda in input e restituisca in output la tabella, in
+modo tale che gli sia consentito aggiungere o rimuovere elementi. In
+particolare una nuova variabile deve essere aggiunta alla tabella quando
+viene dichiarata, e quando si ha un assegnamento di una variabile non
+ancora presente in tabella. Ad ogni aggiunta viene controllata la
+tabella e nel caso fosse già presente una variabile con lo stesso nome,
+il parser solleva \texttt{Fail} e termina la sua esecuzione. Invece ad
+ogni occorrenza della variabile viene fatta sempre una ricerca nella
+tabella per conoscerne il tipo.
 
 Le variabili oltre a poter essere aggiunte alla tabella devono anche
 poter essere rimosse. Si prendano in considerazione una variabili locale
@@ -484,19 +971,16 @@ funzione esterna, quando verrà quindi fatto il parsing di questa seconda
 funzione la variabile non deve essere presente nella tabella. Diventa
 allora necessario definire lo scope per le variabili, in modo che
 determini la presenza o meno della variabile nella tabella. Per come è
-definito il linguaggio questa è un'operazione banale, infatti in scl non
-ci sono funzioni annidate, quindi gli unici blocchi su cui può far parte
-una variabile sono il blocco globale dell'attore e il blocco locale
-della funzione. Quindi durante il parsing, o la variabile è una
-variabile globale, o è una variabile locale della funzione presa in
+definito il linguaggio questa è un'operazione banale, infatti in
+\texttt{scl} non ci sono funzioni annidate, quindi gli unici blocchi su
+cui può far parte una variabile sono il blocco globale dell'attore e il
+blocco locale della funzione. Quindi durante il parsing, o la variabile
+è una variabile globale o è una variabile locale della funzione presa in
 esame: non è possibile avere una variabile attiva che sia allo stesso
 tempo variabile locale di un'altra funzione. Quindi basta associare ad
 ogni variabile nella tabella un valore booleano che denota se la
 variabile è locale o meno, per far sì che quando viene finito il parsing
 di una funzione tutte le variabili locali vengano rimosse.
-
-\hypertarget{tabella-delle-funzioni}{%
-\subsection{Tabella delle funzioni}\label{tabella-delle-funzioni}}
 
 Analogamente alle variabili anche le funzioni possono essere aggiunte
 nella stessa tabella: quando viene dichiarato un metodo, la firma di
@@ -505,33 +989,353 @@ salvata nella tabella dell'attore. Così ogni volta che ci sarà una
 chiamata di funzione dal nome di questa viene cercata la firma del
 metodo nella tabella, e si verifica che la lista delle espressioni nella
 chiamata sia coerente con la lista dei parametri presa dalla firma
-appena ritornata. In scl però si possono chiamare i metodi di uno
-specifico contratto, in questo caso non verrà fatto nessun controllo
-perché il contratto potrebbe essere esterno alla configurazione e, in
-questo caso, non si saprebbe niente sui suoi metodi.
+appena ritornata. In \texttt{scl} però si possono chiamare i metodi di
+uno specifico contratto, in questo caso non verrà fatto alcun controllo
+perché il contratto potrebbe essere esterno al testo su cui fare il
+parsing e, in questo caso, non si avrebbe nessuna informazione.
 
-\hypertarget{distinzione-tra-umani-e-contratti}{%
-\subsection{Distinzione tra umani e
-contratti}\label{distinzione-tra-umani-e-contratti}}
+Un'altra informazione che il parser deve conoscere durante la sua
+esecuzione è se l'attore che sta analizzando sia umano o contratto: come
+si è visto prima all'umano sono permessi più comandi e quindi il suo
+codice può presentare diversi comandi. Questa informazione, che si
+traduce in un booleano, risiede nella come input e output di ogni
+funzione di tipo \texttt{parser}.
 
-Un ultimo accorgimento da fare riguarda la differenza tra il codice di
-contratti e umani, come mostrato in precedenza. Avendo diverse
-operazioni i due hanno una sintassi differente (nella figura non vi è
-distinzione per ragioni di semplicità) e quindi il parser nella sua
-analisi deve sapere se sta facendo il parsing per un umano o per un
-contratto. Questa informazione (che si traduce in un booleano) sarà
-insieme alla tabella come input e output di ogni funzione di tipo
-\texttt{parser}.
-
-\hypertarget{conclusione}{%
-\subsection{Conclusione}\label{conclusione}}
+\hypertarget{conclusione-2}{%
+\subsection{Conclusione}\label{conclusione-2}}
 
 Si è quindi visto che per il parser LL(1) implementato, è stato
-necessario definire in primo luogo una sintassi per scl. Con la tecnica
-dei parser combinator poi è bastato trascrivere le stesse regole della
-grammatica come combinazione di più parser, facendo però alcuni
+necessario definire in primo luogo una sintassi per \texttt{scl}. Con la
+tecnica dei parser combinator poi è bastato trascrivere le stesse regole
+della grammatica come combinazione di più parser, facendo però alcuni
 accorgimenti: si è tolta la ricorsione sinistra per evitare che il
 parser divergesse, e poi è stato messo a punto un controllo sui tipi,
 che grazie all'ausilio di una tabella, toglie le ambiguità.
+
+\hypertarget{compilatore}{%
+\section{Compilatore}\label{compilatore}}
+
+\hypertarget{introduzione-4}{%
+\subsection{Introduzione}\label{introduzione-4}}
+
+Una volta che si hanno a disposizione per programmare in \texttt{scl} ci
+si accorge che ciò che viene a mancare è un'esecuzione vera e propria
+del codice su una blockchain: \texttt{scl} fornisce tutti i mezzi per
+fare analisi, ma solo con \texttt{scl} non è possibile fare deploy di
+ciò che si scrive. È necessario quindi un compilatore da \texttt{scl}
+verso un linguaggio già conosciuto su cui è possibile fare deploy. Per
+la traduzione dei contratti è necessario quindi un linguaggio di
+\emph{smart contract}: si è scelto così \texttt{Solidity},
+principalmente per il fatto che è il più conosciuto e a differenza di
+altri (vedi Liquidity) allo stato attuale è difficile che venga
+abbandonato il progetto, col quale è possibile fare il deploy dei
+contratti sulla sua blockchain Ethereum.
+
+\hypertarget{solidity-e-ethereum}{%
+\subsection{Solidity e Ethereum}\label{solidity-e-ethereum}}
+
+Ethereum è una piattaforma decentralizzata che permette lo sviluppo di
+\emph{smart contract} da parte di programmatori. Ethereum fornisce
+quindi una macchina virtuale (EVM), che costituisce l'ambiente di
+esecuzione degli \emph{smart contract}. Ethereum mette a disposizione
+Solidity, un linguaggio che in una logica di programmazione ad oggetti
+(Class-based) permette di programmare \emph{smart contract}. Il
+compilatore di Solidity traduce il programma in bytecode, e poi il
+programma tradotto viene eseguito nella EVM.
+
+Solidity quindi permette di definire le classi di contratti, che possono
+essere ereditati da altre classi o interfacce specificando metodi e
+campi. Ogni contratto nella rete ha un indirizzo a cui altri contratti
+si possono riferire per interagire. Inoltre tutti i contratti hanno un
+balance che consiste nella quantità di Ether (criptovaluta di Ethereum)
+che può essere modificato con transazioni (chiamate di funzioni) da
+parte di utenti o contratti. Le funzioni possono essere marcate come
+\texttt{payable}, in modo tale da poter ricevere Ether quando chiamate.
+Ci sono poi indirizzi speciali come \texttt{this} e \texttt{msg.sender}
+dove quest'ultimo si riferisce all'indirizzo al chiamato. Ogni contratto
+inoltre ha un Abstract Binary Interface, che rappresenta l'interfaccia
+di un contratto, e che insieme all'indirizzo del contratto diventa
+interessante nella fase di deploy. Solidity permette di riferirsi a un
+oggetto di tipo generico tramite la parola chiave \texttt{address} (che
+è l'analogo di \texttt{Object} in Java), che diventa utile in fase di
+compilazione quando ci si riferisce a un contratto non conosciuto.
+
+\hypertarget{section-1}{%
+\subsection{}\label{section-1}}
+
+Come abbiamo visto c'è una differenza importante tra \texttt{scl} e
+Solidity: nel primo il linguaggio definisce un oggetto contratto, mentre
+il secondo definisce la classe del contratto. È necessario marcare
+questa differenza perché in scl all'interno di un contratto ci si
+riferisce ad altri contratti specifici nella configurazione, non a
+contratti qualsiasi con una determinata struttura. Nel nostro caso, in
+Solidity, sarebbe quindi sbagliato riferirsi a questi contratti tramite
+la clausola \texttt{new}, perché così verrebbe creato un nuovo
+contratto, sarebbe necessario riferirsi a ogni contratto attraverso il
+loro indirizzo. Il problema è che al momento della scrittura del codice
+Solidity non si sa quali siano questi indirizzi, mentre in \texttt{scl}
+ogni contratto conosce implicitamente tutti gli altri della
+configurazione. Diventa quindi necessario separare la parte di
+compilazione in codice Solidity, dalla generazione del codice che
+servirà alla parte di deploy, dove Solidity crea la classe per ciascun
+oggetto contratto della configurazione, mentre il codice per il deploy
+quest'ultimo genera gli effettivi contratti nella blockchain, con i
+relativi indirizzi.
+
+\hypertarget{albero-di-sintassi-astratta-per-solidity}{%
+\subsection{Albero di sintassi astratta per
+Solidity}\label{albero-di-sintassi-astratta-per-solidity}}
+
+Essendo \texttt{scl} un codice minimale, nella fase di compilazione
+effettivamente si genera un sottoinsieme del codice di Solidity: non
+saranno presenti tutti i suoi costrutti, ma solo quelli di cui ne fa
+relativo uso \texttt{scl}.
+
+Il processo di compilazione verso Solidity si divide in due parti: la
+prima in cui dall'albero di sintassi astratta \texttt{scl} si passa al
+relativo albero del sottoinsieme di Solidity, la seconda in cui
+dall'albero appena generato si traduce in effettivo codice Solidity.
+L'idea è che l'albero di sintassi astratta intermedio venga generato
+ricalcando i costrutti del linguaggio, cosicché la seconda fase risulti
+immediata. Ancora una volta è quindi necessario un AST, e analogamente
+al caso precedente è bene che sia \emph{Intrinsically Typed}, quindi
+viene sempre implementato con i GADT di OCaml. Se quindi si ha un AST
+ben tipato conforme ai costrutti Solidity, basta preoccuparsi di
+assegnare ad ogni tipo di un sottoalbero in \texttt{scl} il tipo nel
+sottoalbero di solidity per avere la certezza di generare codice ben
+tipato in Solidity. Di nuovo non è necessario un controllo di tipo
+esterno all'albero generato. L'albero di cui si parla è il seguente:
+
+\begin{verbatim}
+configuration ::= a_contract list
+a_contract ::= Contract(string,decl list,program list)
+stm ::= Assignment (var,e) | IfElse (e,stm,stm) | Sequence (stm,stm)
+decl ::= Declaration((t,string),v)
+program ::= meth,(stm,e)
+meth ::= (string,paraml,(t,storage?),view*,visibility*)
+storage ::= Storage | Memory | Calldata 
+paraml ::= PNil | PCons((t,storage?),paraml)
+view ::= View | Pure | Payable
+visibility ::= External | Public | Internal | Private
+intf_id ::= InterfaceId string
+var ::= (t,string)
+v ::= int | bool | string | interface_id | AddrInt intf_id
+e ::= Value v | Var var | This | MsgValue | Balance 
+      | CastInterf (intf_id, e) | Addr e | Plus (e,e) 
+      | Mult (e,e) | Minus (e,e) | Max(e,e) | Geq(e,e)
+      | Gt(e,e) | Eq(t,e,e) | And(e,e) | Or (e,e) | Not e 
+      | Symbol string | CondExpr(e,e,e) | Call(e, meth, elist)
+elist ::= ExprNil | ExprCons (e,elist)
+
+t ::= Int | Bool | String | Interf | Address
+\end{verbatim}
+
+Come si può notare la definizione dell'AST per Solidity, presenta
+qualche differenza rispetto a quello per \texttt{scl}. Ovviamente non si
+hanno più le regole caratteristiche per gli umani, ma in più sono
+aggiunti nuovi nodi. Si nota che nella definizione di funzione
+(\texttt{meth}) viene specificato oltre al nome, i parametri e il tipo
+di ritorno, la visibilità e la view che sono caratteristiche di
+Solidity. La visibilità, come in altri linguaggi di programmazione ad
+oggetti, denota chi può chiamare la funzione, mentre la view (più
+specifica per Solidity) è relativa alla possibilità che ha la funzione
+di cambiare lo stato interno. Ma la maggior modifica è relativa ai tipi:
+non si ha più un unico \texttt{ContractAddress}, ma si ha sia il tipo
+\texttt{Interf} sia il tipo \texttt{Address}, e due nuove espressioni
+\texttt{CastInterf} e \texttt{Addr} che permettono il cast. Questa
+distinzione di tipi è dovuta al fatto che, come si diceva prima, in
+Solidity sono realizzate le classi relative ai contratti \texttt{scl},
+ma un contratto con gli altri contratti della configurazione interagisce
+mediante l'indirizzo.
+
+\hypertarget{interfacce}{%
+\subsection{Interfacce}\label{interfacce}}
+
+Come spiegato precedentemente, si deve riprodurre in Solidity una
+configurazione in cui tutti i contratti si conoscano, per cui deve
+essere possibile che all'interno di un contratto avere campi relativi ad
+altri contratti, sui quali chiamare i relativi metodi. Ci si chiede così
+quale debba essere il tipo Solidity di questi campi. Logicamente se si
+volesse rimanere aderenti al codice \texttt{scl} -- dove un contratto in
+realtà è di tipo \texttt{ContractAddress} -- dovrebbero essere di tipo
+\texttt{address}. Il problema però è che se ci si riferisce solo
+all'indirizzo del contratto allora anche le chiamate di funzione devono
+essere fatte sull'indirizzo --sarebbe come fare in Java una chiamata di
+metodo su un oggetto di tipo \texttt{Object}. Solidity permette questo
+tipo di chiamate a basso livello usando la funzione \texttt{call}. Il
+tipo di ritorno per queste chiamate, però, è espresso in byte e per fare
+la conversione si sarebbe obbligati a scrivere codice Assembly. Si
+preferisce quindi un'altra tecnica, dove le chiamate vengono fatte su
+degli oggetti meno generici dove si conosce il tipo di ritorno delle
+funzioni.
+
+Ad ogni campo di tipo contratto allora è fatta corrispondere
+un'interfaccia che contiene la firma dei suoi metodi. Solidity permette
+appunto di fare il cast da interfaccia a indirizzo e viceversa. In
+questo modo è necessario sempre lavorare con gli indirizzi dei
+contratti, riuscendo a rimanere fedeli al codice \texttt{scl}, e allo
+stesso tempo usare le interfacce, necessarie per le chiamate di
+funzione. In particolare si è scelto che i campi (sempre di tipo
+contratto) sono oggetti che hanno come tipo la loro interfaccia, mentre
+i parametri sono indirizzi a cui nella loro dichiarazione viene
+associata la loro relativa interfaccia. Quindi se si ha una chiamata di
+funzione su un parametro, allora viene fatto il cast alla sua
+interfaccia, mentre se viene passato un oggetto di tipo interfaccia come
+parametro attuale di una funzione viene fatto il cast verso l'indirizzo.
+Affinché le interfacce facciano il loro lavoro, è necessario che ad ogni
+chiamata di un metodo di un contratto, venga aggiunta la firma del
+metodo nell'interfaccia.
+
+\begin{verbatim}
+Contract sample {
+    Contract interf
+    int x
+    function m (Contract addr): int{
+        x = addr.f(interf)
+        x = interf.g(addr)
+        return x
+    }
+
+}
+\end{verbatim}
+
+Il codice \texttt{scl} vede un campo di tipo contratto (\texttt{interf})
+e un parametro di tipo contratto (\texttt{addr}), la compilazione verso
+solidity è:
+
+\begin{verbatim}
+interface Interf0{
+    function g(address) external returns (int);
+}
+interface Interf1{
+    function f(address) external returns (int);
+}
+contract sample {
+    Interf0 interf;
+    int x;
+
+    function m(address addr) public returns (int){
+        x = Interf1(addr).f(address(interf));
+        x = interf.g(addr);
+        return x;
+    }
+}
+\end{verbatim}
+
+Si nota quindi che \texttt{interf} è tradotto come un oggetto con la sua
+interfaccia \texttt{Interf0}, mentre \texttt{addr} che nel codice
+\texttt{scl} è sempre dello stesso tipo, è un oggetto generico di tipo
+\texttt{address}, ma nonostante ciò ad \texttt{addr} viene associata
+l'interfaccia \texttt{Interf1}. Quando viene chiamata una funzione su
+\texttt{addr}, viene prima fatto il cast in \texttt{Interf1}, mentre
+quando viene chiamata una funzione su \texttt{interf} non viene fatto
+nessun cast. Invece nel passaggio di parametri si ha il cast verso
+\texttt{address} quando viene passata \texttt{interf}, mentre non si ha
+il cast di \texttt{addr}, siccome è già del tipo \texttt{address}. Si
+nota anche che le due funzioni chiamata sono aggiunte nelle relative
+interfacce: la funzione \texttt{g}, chiamata da \texttt{interf} è
+aggiunta in \texttt{Interf0}, e la funzione \texttt{f} chiamata da
+\texttt{addr} è aggiunta in \texttt{Interf1}.
+
+Rimane da capire cosa fare a livello di interfacce quando si ha un
+assegnamento di contratti con interfacce diverse. In pratica si ha che
+deve avvenire un cast verso l'interfaccia del \emph{lhs}, però, dal
+momento che i tipi in solidity sono nominali, sarebbe necessario anche
+che i metodi dell'interfaccia del \emph{rhs} vengano aggiunti nel
+\emph{lhs}. Si potrebbe quindi aggiungere manualmente i metodi al
+\emph{lhs}, o comunque far ereditare il \emph{lhs} al \emph{rhs}. Si è
+però aggirato il problema, in modo che se ne preoccupasse a tempo
+l'esecuzione invece della compilazione. Infatti è stato fatto prima un
+cast dal \emph{rhs} all'indirizzo e poi dall'indirizzo all'interfaccia,
+e in questo modo è possibile qualsiasi cast senza che il compilatore
+solidity non segnali niente.
+
+\begin{verbatim}
+Contract p
+Contract q
+p = q
+\end{verbatim}
+
+L'assegnamento diventa:
+
+\begin{verbatim}
+Interf0 p;
+Interf1 q;
+
+p = Interf0(address(q));
+\end{verbatim}
+
+\hypertarget{inizializzazione-degli-indirizzi}{%
+\subsection{Inizializzazione degli
+indirizzi}\label{inizializzazione-degli-indirizzi}}
+
+Si sa quindi come avviene la traduzione per i tipi \texttt{Contract} di
+\texttt{scl}, non è ancora chiaro però come la compilazione possa far
+conoscere ad ogni contratto tutti gli altri della configurazione.
+Ovviamente in Solidity un contratto per ``conoscere'' altri contratti
+deve avere gli indirizzi di questi ultimi. Questi indirizzi non saranno
+noti a tempo di compilazione, poiché sono indirizzi relativi alla
+blockchain e quindi assegnati quando viene fatto deploy. Ma per fare in
+modo che a tempo di deploy si possano comunicare al contratto tutti gli
+indirizzi è necessario che nel codice solidity ci siano i mezzi per fare
+in modo che questa comunicazione avvenga. In particolare ogni contratto
+deve avere un campo per ogni altro contratto della configurazione, viene
+poi creata una funzione \texttt{init} che assegna gli indirizzi passati
+come parametro ai rispettivi campi. Questa funzione verrà poi chiamata
+in fase di deploy quando si conoscono effettivamente gli indirizzi.
+
+\begin{verbatim}
+Contract a{}
+Contract b{}
+Contract c{}
+\end{verbatim}
+
+La configurazione base mostrata nell'esempio viene compilata in:
+
+\begin{verbatim}
+contract a {
+    Interf1 c;
+    Interf0 b;
+    bool initialize = false;
+    
+    function init(address _b, address _c) public {
+        if (!initialize){
+            b = Interf0(_b);
+            c = Interf1(_c);
+            initialize = true;
+        }
+    }
+}
+contract b {
+    Interf3 c;
+    Interf2 a;
+    bool initialize = false;
+    
+    function init(address _a, address _c) public {
+        if (!initialize){
+            a = Interf2(_a);
+            c = Interf3(_c);
+            initialize = true;
+        }
+    }
+}
+contract c {
+    Interf5 b;
+    Interf4 a;
+    bool initialize = false;
+
+    function init(address _a, address _b) public {
+        if (!initialize){
+            a = Interf4(_a);
+            b = Interf5(_b);
+            initialize = true;
+        }
+    }
+}
+\end{verbatim}
+
+dove il campo \texttt{initialize} assicura che la funzione \texttt{init}
+non venga chiamata più volte. Così ogni contratto si può riferire agli
+altri contratti della configurazione.
 
 \end{document}

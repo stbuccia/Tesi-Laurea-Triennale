@@ -17,14 +17,14 @@ In primo luogo, si può notare che la stesura del codice `scl` risulta complicat
 [...]
 <!---
 
-Compilatore verso solidity 
+Compilatore verso Solidity 
 con .sol
 
 Deploy con script python-->
 
 \newpage
 
-# Intrinsically Typed Data Structures: uso per assicurare la type safety
+# Intrinsically Typed Data Structures
 
 ## Introduzione
 
@@ -149,7 +149,7 @@ t ::= int | bool | string | Contract | Human
 
 In figura viene mostrata la grammatica su cui si basa l'analizzatore sintattico, nella quale sono presenti i simboli terminali che necessitano di essere riconosciuti durante l'analisi lessicale: che sono `Int` (ovvero l'insieme dei numeri interi), `String` (l'insieme delle stringhe) e `Var` (l'insieme di tutte le variabili), a cui si aggiungono tutte le parole chiave (ad esempio `return`, `if`, `+`, `>`, ...) che devono essere specificate al lexer. Invece la parte di analisi sintattica, una volta riconosciuti i simboli terminali, si preoccuperà di riconoscere i simboli non terminali e le opportune produzioni ricalcando la struttura del programma in input.
 
-Questa sintassi permette di definire un insieme di attori, ognuno dei quali ha sia dei campi, che devono essere dichiarati, che una lista di metodi. Questi ultimi sono composti da una firma (con tipo in input e in output, dove quest'ultimo è sempre presente), uno statement (consistente in una lista di comandi di assegnamento, o istruzione condizionale o, nel caso di attori umani, scelta) e espressione di ritorno. I tipi nella grammatica sono gli stessi tipi di `scl`: interi, booleani, stringhe, contratti e umani.
+Questa sintassi permette di definire un insieme di attori, ognuno dei quali ha sia dei campi, che devono essere dichiarati, che una lista di metodi. Questi ultimi sono composti da una firma (con tipo in input e in output, dove quest'ultimo è sempre presente), uno statement (consistente in una lista di comandi di assegnamento, o istruzione condizionale o, nel caso di attori umani, scelta) e espressione di ritorno. I tipi nella grammatica sono gli stessi tipi di `scl`: interi, booleani, stringhe, contratti e umani. Sono messe a disposizione le principali operazioni tra questi in particolar modo per gli interi e per i booleani. È possibile anche assegnare una stringa a un intero tramite il costrutto `symbol`, che similmente alle macro di C indica un valore costante.
 
 Particolarmente interessante è il fatto che nella dichiarazione dell'attore si può specificare tra `()` il _balance_ iniziale, ovvero i soldi che sono inizialmente assegnati al contratto o all'umano. Questo equivale a fare un assegnamento alla variabile intera denominata `balance`. È inoltre possibile inviare dei soldi al contratto nelle chiamate di funzioni semplicemente con la parola chiave `value` e specificando il valore.
 
@@ -419,23 +419,28 @@ Il problema dell'ambiguità della grammatica, invece, è stato aggirato mediante
 
 ## Introduzione
 
-Una volta che si hanno a disposizione tutti gli strumenti per programmare in `scl` ci si accorge che ciò che viene a mancare è un'esecuzione vera e propria del codice su una blockchain: `scl` fornisce tutti i mezzi per fare analisi, ma solo con `scl` non è possibile fare deploy di ciò che si scrive. È necessario quindi un compilatore da `scl` verso un linguaggio già conosciuto su cui è possibile fare deploy. Per la traduzione dei contratti è necessario quindi un linguaggio di _smart contract_. Si è scelto così Solidity, principalmente per il fatto che è il più conosciuto e a differenza di altri (come ad esempio Liquidity) allo stato attuale è difficile che venga abbandonato il progetto. Con Solidity diventa possibile fare il deploy dei contratti sulla sua blockchain Ethereum. 
+Una volta che si hanno a disposizione tutti gli strumenti per programmare in `scl` ci si accorge che ciò che viene a mancare è un'esecuzione vera e propria del codice su una blockchain: `scl` fornisce tutti i mezzi per fare analisi, ma solo con `scl` non è possibile fare il deploy di ciò che si scrive. È necessario quindi un compilatore da `scl` verso un linguaggio già conosciuto, che dovrà essere un linguaggio di _smart contract_. Si è scelto Solidity, principalmente per il fatto che è il più conosciuto e, a differenza di altri (come ad esempio Liquidity), allo stato attuale è difficile che venga abbandonato. Con Solidity diventa possibile fare il deploy dei contratti sulla sua blockchain Ethereum. 
 
-## Solidity e Ethereum
+Il processo di compilazione verso Solidity si divide in due parti: la prima in cui dall'albero di sintassi astratta `scl` si passa a un altro albero di sintassi astratta per Solidity; la seconda in cui l'albero generato viene tradotto in effettivo codice Solidity.
 
-Ethereum è una piattaforma decentralizzata che permette lo sviluppo di _smart contract_ da parte di programmatori. Ethereum mette quindi a disposizione Solidity, un linguaggio che in una logica di programmazione ad oggetti (Class-based) permette di programmare _smart contract_. Il compilatore di Solidity traduce il programma in bytecode, e poi il programma tradotto viene eseguito nella EVM, la macchina virtuale di Ethereum che costituisce l'ambiente di esecuzione degli _smart contract_. 
+## Solidity ed Ethereum
 
-Solidity è un linguaggio che permette di definire le classi di contratti, che possono essere ereditati da altre classi o interfacce specificando metodi e campi. Ogni contratto nella blockchain ha un indirizzo a cui altri contratti si possono riferire per interagire. Inoltre tutti i contratti hanno un balance che consiste nella quantità di Ether (criptovaluta di Ethereum) che può essere modificato con transazioni (chiamate di funzioni) da parte di utenti o contratti. Le funzioni possono essere marcate come `payable`, in modo tale da poter ricevere Ether quando chiamate. Ci sono poi indirizzi speciali come il noto `this` e `msg.sender`, dove quest'ultimo si riferisce all'indirizzo al chiamato. Ogni contratto inoltre ha un Abstract Binary Interface (`abi`) che rappresenta l'interfaccia di un contratto, diventa interessante nella fase di deploy, in quanto insieme all'indirizzo del contratto costituiscono tutte le informazioni necessarie per la creazione del contratto . Solidity permette di riferirsi a un indirizzo di un contratto la parola chiave `address`, che costituisce il tipo generico di un oggetto (analogamente a `Object` in Java), e che diventa utile in fase di compilazione quando ci si riferisce a un contratto non conosciuto. 
+Ethereum è una piattaforma decentralizzata che permette lo sviluppo di _smart contract_ da parte di programmatori. Ethereum mette a disposizione Solidity, un linguaggio che in una logica di programmazione ad oggetti class-based permette di programmare _smart contract_. Il compilatore di Solidity traduce in un primo momento il programma in bytecode per poi eseguirlo nella EVM, la macchina virtuale di Ethereum -- la quale costituisce, quindi, l'ambiente di esecuzione degli _smart contract_. 
+
+Solidity è un linguaggio imperativo che permette di definire delle classi di contratti, che come nella logica dei linguaggi orientati agli oggetti possono essere ereditati da altre classi o interfacce, specificando metodi e campi. Ogni contratto nella blockchain ha un suo indirizzo specifico a cui altri contratti si possono riferirsi. Inoltre tutti i contratti hanno un campo `balance` che consiste nella quantità di Ether (criptovaluta di Ethereum) che può essere modificato con transazioni (chiamate di funzioni) da parte di utenti o contratti. Le funzioni possono essere marcate come `payable`, in modo tale da poter ricevere Ether quando chiamate. Ci sono poi indirizzi speciali come il noto `this` e `msg.sender`, dove quest'ultimo si riferisce all'indirizzo al chiamato. Ogni contratto inoltre ha un Abstract Binary Interface (`ABI`) che rappresenta l'interfaccia di un contratto, costituita dalle firme dei metodi e dai campi del contratto. L'`ABI` diventa interessante nella fase di deploy, in quanto con l'indirizzo del contratto costituisce l'insieme delle informazioni necessarie per la creazione del contratto stesso. Solidity permette di riferirsi a un indirizzo di un contratto tramite la parola chiave `address`, che costituisce il tipo generico di un oggetto (analogamente a `Object` in Java), e che diventa utile in fase di compilazione nell'eventualità ci si debba riferire a un contratto non conosciuto. Ogni contratto può definire una funzione di `fallback`, che viene eseguita quando dall'esterno ci si riferisce a una funzione non presente nell'`ABI` del contratto stesso.
+
+Solidity quindi definisce solo i contratti, non mette a disposizione gli strumenti per definire gli utenti: infatti chi vuole interagire coi contratti di Ethereum deve iscriversi al servizio. Quindi nella compilazione che si va ad esporre verrà tralasciato l'aspetto relativo agli utenti.
 
 ## Differenze tecniche tra `scl` e Solidity
 
-È stata appena introdotta una differenza importante tra `scl` e Solidity: il primo linguaggio definisce un oggetto contratto, mentre il secondo definisce la classe del contratto. È necessario marcare questa differenza perché in `scl`, a differenza di Solidity, all'interno di un contratto ci si può riferire specificamente ad altri contratti nella configurazione. Si potrebbe pensare, invece, che questa cosa possa avvenire anche in Solidity, riferendosi a questi contratti tramite la clausola `new`, ma sarebbe una cosa diversa perché così verrebbe creato un nuovo contratto, invece che un riferimento a contratto specifico. Sarebbe invece più opportuno riferirsi a ogni contratto attraverso il loro indirizzo. Il problema è che al momento della scrittura del codice Solidity non si sa quali siano questi indirizzi, mentre in `scl` non si ha questo problema perché ogni contratto conosce implicitamente tutti gli altri della configurazione. Diventa quindi necessario separare la parte di compilazione in codice Solidity dalla generazione del codice, dove Solidity crea la classe per ciascun oggetto contratto della configurazione, dalla parte di deploy, dove sulla base del codice Solidity vengono generati gli effettivi contratti nella blockchain con i relativi indirizzi. 
+È stata appena introdotta una differenza importante tra `scl` e Solidity: il primo linguaggio definisce un _oggetto_ contratto, mentre il secondo definisce la _classe_ del contratto. È necessario marcare questa differenza perché in `scl` nella configurazione di un contratto si possono fare riferimenti specifici ad altri contratti. Si potrebbe pensare che questa cosa possa avvenire anche in Solidity, riferendosi a altri contratti tramite la clausola `new`, ma sarebbe una cosa diversa: così verrebbe creato un nuovo contratto, invece di riferirsi a un contratto specifico già esistente. Sarebbe invece più opportuno riferirsi ad ogni contratto attraverso il suo indirizzo. Il problema è che al momento della compilazione del codice verso Solidity non si sa quali siano questi indirizzi. In `scl` non si ha questo problema siccome, essendo un linguaggio ad attori, ogni contratto conosce implicitamente i riferimenti a tutti i contratti della configurazione, senza necessitare di nessun indirizzo. Diventa quindi necessario separare la parte di compilazione in codice Solidity: dalla generazione del codice, dove Solidity crea la classe per ciascun oggetto contratto della configurazione, bisogna distinguere la parte di deploy, dove sulla base del codice Solidity vengono generati gli effettivi contratti nella blockchain con i relativi indirizzi. In questo capitolo ci si concentra solo sulla prima parte, il capitolo <!--TODO riferimento--> analizzerà la parte relativa al deploy.
 
 ## Albero di sintassi astratta per Solidity
 
-Essendo `scl` un codice minimale, nella fase di compilazione si genera un sottoinsieme del codice di Solidity: non saranno presenti tutti i suoi costrutti, ma solo quelli di cui ne fa relativo uso `scl`. 
+Essendo `scl` un codice minimale, nella fase di compilazione si genera un sottoinsieme del codice di Solidity: non saranno presenti tutti i suoi costrutti, ma solo quelli di cui ne fa relativo uso `scl`. L'idea è che venga generato un albero di sintassi astratta intermedio che ricalchi i costrutti del linguaggio Solidity, cosicché successivamente dall'albero possa essere generato il codice Solidity in maniera immediata.
 
-Il processo di compilazione verso Solidity si divide in due parti: la prima in cui dall'albero di sintassi astratta `scl` si passa al relativo albero del sottoinsieme di Solidity, la seconda in cui dall'albero appena generato si traduce in effettivo codice Solidity. L'idea è che l'albero di sintassi astratta intermedio venga generato ricalcando i costrutti del linguaggio Solidity, cosicché la seconda fase risulti immediata. Ancora una volta è quindi necessario un AST, e analogamente al caso precedente si preferisce che sia _Intrinsically Typed_, quindi viene sempre implementato con i GADT di OCaml. In questo modo si ha un AST ben tipato conforme ai costrutti Solidity, la traduzione quindi avviene facendo corrispondere ad ogni tipo di `scl` un tipo di Solidity. L'albero di cui si parla è il seguente:
+<!--TODO da qui-->
+L'albero di sintassi astratta generato dalla compilazione è sempre intrinsecamente tipato, quindi l'idea è che cerchi di rappresentare la struttura di un generico programma ben tipato in Solidity. Il compilatore quindi deve cercare di tradurre un AST intrinsecamente tipato di `scl` in un AST intrinsecamente tipato per Solidity. Siccome ad un programma ben tipato in `scl` deve corrispondere uno ben tipato di Solidity, ci si chiede se tra i due AST ci sia una corrispondenza di tipi. Come visto nel capitolo <!--TODO riferimento --> i tipi in `scl` sono gli interi, i booleani, le stringhe, i contratti e gli umani. I primi tre di questi tipi sono dei tipi primitivi in Solidity e quindi ad ognuno di questi può essere fatto corrispondere il relativo tipo, gli umani invece non sono presenti in Solidity, ma siccome la compilazione consiste nella traduzione solo dei contratti il compilatore può sollevare un'eccezione quando incorre in una traduzione di un umano, bisogna invece prestare più attenzione nella traduzione del tipo contratto. Ovviamente ad ogni contratto definito in `scl` è fatta corrispondere una classe di quel contratto, ma come definire gli oggetti contratto all'interno di una classe è una questione più delicata come vedremo in seguito. Una volta che viene creata una corrispondenza dei tipi dei due linguaggi ad ogni costrutto `scl` deve essere fatto corrispondere il medesimo in Solidity. Come si è visto i costrutti `scl` sono dei costrutti molto comuni ai linguaggi di programmazione (_if then else_, chiamate e definizioni di funzioni, operatori algebrici e logici): la traduzione verso solidity di questi costrutti risulta abbastanza banale. Ovviamente tutti gli operatori caratteristici degli umani non vengono tradotti. L'albero per Solidity infatti è il seguente:
 ```bnf
 configuration ::= a_contract list
 a_contract ::= Contract(string,decl list,program list)
@@ -449,7 +454,7 @@ view ::= View | Pure | Payable
 visibility ::= External | Public | Internal | Private
 intf_id ::= InterfaceId string
 var ::= (t,string)
-v ::= int | bool | string | interface_id | AddrInt intf_id
+v ::= int | bool | string | intf_id | AddrInt intf_id
 e ::= Value v | Var var | This | MsgValue | Balance 
       | CastInterf (intf_id, e) | Addr e | Plus (e,e) 
       | Mult (e,e) | Minus (e,e) | Max(e,e) | Geq(e,e)
@@ -459,7 +464,7 @@ elist ::= ExprNil | ExprCons (e,elist)
 
 t ::= Int | Bool | String | Interf | Address
 ```
-Come si può notare la definizione dell'AST per Solidity, presenta qualche differenza rispetto a quello per `scl`: vengono rimosse, ovviamente, le regole caratteristiche per gli umani, ma vengono aggiunti nuovi nodi. Si nota che nella definizione di funzione (`meth`) viene specificato oltre al nome, i parametri e il tipo di ritorno, la visibilità e la view che sono caratteristiche di Solidity. La visibilità, come in altri linguaggi di programmazione ad oggetti, denota chi può chiamare la funzione, mentre la view (più specifica per Solidity) è relativa alla possibilità che ha la funzione di cambiare lo stato interno. Ma la maggior modifica è relativa ai tipi: non si ha più un unico `ContractAddress`, ma si ha sia il tipo `Interf` sia il tipo `Address`, e due nuove espressioni `CastInterf` e `Addr` che permettono il cast tra i due tipi. Questa distinzione di tipi è dovuta al fatto che, come si diceva prima, in Solidity sono realizzate le classi relative ai contratti `scl`, ma un contratto con gli altri contratti della configurazione interagisce mediante l'indirizzo.
+Sebbene non presenti grandi differenze rispetto all'AST per `scl` nella definizione dell'AST per Solidity vengono aggiunti nuovi nodi. Si nota che nella definizione di funzione (`meth`) viene specificato oltre al nome, i parametri e il tipo di ritorno, la visibilità e la view che sono caratteristiche di Solidity. La visibilità, come in altri linguaggi di programmazione ad oggetti, denota chi può chiamare la funzione, mentre la view (più specifica per Solidity) è relativa alla possibilità che ha la funzione di cambiare lo stato interno. Come preannunciato la maggior modifica è relativa ai tipi: non si ha più un unico `Contract`, ma si ha sia il tipo `Interf` sia il tipo `Address`, e due nuove espressioni `CastInterf` e `Addr` che permettono il cast tra i due tipi. Questa distinzione di tipi è dovuta al fatto che, come si diceva prima, in Solidity sono realizzate le classi relative ai contratti `scl`, ma un contratto con gli altri contratti della configurazione interagisce mediante l'indirizzo.
 
 ## Interfacce per le variabili `Contract`
 
@@ -478,9 +483,9 @@ Contract sample {
 
 }
 ```
-Nell'esempio di codice `scl` vede un campo di tipo contratto (`interf`) e un parametro di tipo contratto (`addr`), la compilazione verso solidity è:
+Nell'esempio di codice `scl` vede un campo di tipo contratto (`interf`) e un parametro di tipo contratto (`addr`), la compilazione verso Solidity è:
 
-```solidity
+```Solidity
 interface Interf0{
     function g(address) external returns (int);
 }
@@ -498,9 +503,9 @@ contract sample {
     }
 }
 ```
-Si nota quindi che `interf` è tradotto come un oggetto con la sua interfaccia `Interf0`, mentre `addr` che nel codice `scl` è sempre dello stesso tipo, è un oggetto generico di tipo `address`, ma nonostante ciò ad `addr` viene associata l'interfaccia `Interf1`. Quando viene chiamata una funzione su `addr`, viene prima fatto il cast in `Interf1`, mentre quando viene chiamata una funzione su `interf` non viene fatto nessun cast. Invece nel passaggio di parametri si ha, il cast verso `address` quando viene passata `interf`, mentre non si ha il cast di `addr` siccome è già del tipo `address`. Si nota anche che le due funzioni chiamata sono aggiunte nelle relative interfacce: la funzione `g`, chiamata da `interf` è aggiunta in `Interf0`, e la funzione `f` chiamata da `addr` è aggiunta in `Interf1`.
+Si nota quindi che `interf` è tradotto come un oggetto con la sua interfaccia `Interf0`, mentre `addr` che nel codice `scl` è sempre dello stesso tipo, è un oggetto generico di tipo `address`, ma nonostante ciò ad `addr` viene associata l'interfaccia `Interf1`. Quando viene chiamata una funzione su `addr`, viene prima fatto il cast in `Interf1`, mentre quando viene chiamata una funzione su `interf` non viene fatto nessun cast. Invece nel passaggio di parametri si ha il cast verso `address` quando viene passata `interf`, mentre non si ha il cast di `addr` siccome è già del tipo `address`. Si nota anche che le due funzioni chiamata sono aggiunte nelle relative interfacce: la funzione `g`, chiamata da `interf` è aggiunta in `Interf0`, e la funzione `f` chiamata da `addr` è aggiunta in `Interf1`.
 
-Rimane da capire cosa fare a livello di interfacce quando si ha un assegnamento di contratti con interfacce diverse. In pratica si ha che deve avvenire un cast verso l'interfaccia del _lhs_, però, dal momento che i tipi in solidity sono nominali, sarebbe necessario anche che i metodi dell'interfaccia del _rhs_ vengano aggiunti nel _lhs_. Si potrebbe quindi aggiungere manualmente i metodi all'interfaccia del _lhs_, o comunque far ereditare il _lhs_ al _rhs_. Si è però aggirato il problema, in modo che Solidity se ne preoccupasse a tempo di esecuzione invece che durante la compilazione. Infatti è stato fatto prima un cast dal _rhs_ all'indirizzo e poi dall'indirizzo all'interfaccia, e in questo modo è possibile qualsiasi cast tra due diversi oggetti senza che il compilatore solidity non segnali niente. 
+Rimane da tradurre la situazione in cui si ha un assegnamento di contratti con interfacce diverse. In pratica si ha che deve avvenire un cast verso l'interfaccia del _lhs_, però, dal momento che i tipi in Solidity sono nominali, sarebbe necessario anche che i metodi dell'interfaccia del _rhs_ vengano aggiunti nel _lhs_. Si potrebbe quindi aggiungere manualmente i metodi all'interfaccia del _lhs_, o comunque far ereditare il _lhs_ al _rhs_. Si è però aggirato il problema, in modo che Solidity se ne preoccupasse a tempo di esecuzione invece che durante la compilazione. Infatti è stato fatto prima un cast dal _rhs_ al suo `address` e poi dall'indirizzo all'interfaccia. In questo modo è possibile qualsiasi cast tra due diversi oggetti senza che il compilatore Solidity sollevi un'eccezione.
 ```
 Contract p
 Contract q
@@ -513,17 +518,18 @@ Interf1 q;
 
 p = Interf0(address(q));
 ```
+<!--TODO a qui-->
 
 ## Inizializzazione degli indirizzi
 
-Si sa quindi come avviene la traduzione per i tipi `Contract` di `scl`, non è ancora chiaro però come la compilazione possa far conoscere ad ogni contratto tutti gli altri contratti della configurazione. Ovviamente in Solidity sarebbe necessario che un contratto debba avere gli indirizzi di degli ultimi. Questi indirizzi non saranno noti a tempo di compilazione poiché sono indirizzi relativi al posizionamento del contratto nella blockchain e quindi sono assegnati quando viene fatto deploy. Ma per fare in modo che a tempo di deploy si possano comunicare al contratto tutti gli indirizzi richiesti è necessario che nel codice solidity ci siano i mezzi per fare in modo che questa comunicazione avvenga. In particolare ogni contratto deve avere un campo per ogni altro contratto della configurazione, viene poi creata una funzione `init` che assegna gli indirizzi passati come parametro ai rispettivi campi. Questa funzione verrà poi chiamata in fase di deploy quando si conoscono effettivamente gli indirizzi.
+Definito quindi come avviene la traduzione per i tipi `Contract` di `scl`, non è ancora chiaro però come la compilazione possa far conoscere ad ogni contratto i riferimenti degli altri contratti della configurazione. Ovviamente in Solidity sarebbe necessario che un contratto debba avere gli indirizzi di degli altri contratti. Questi indirizzi non sono noti a tempo di compilazione poiché sono indirizzi relativi al posizionamento del contratto nella blockchain e quindi sono assegnati al momento del deploy. Per fare in modo che a tempo di deploy si possano comunicare al contratto tutti gli indirizzi richiesti è necessario che ogni contratto abbia un campo per ogni altro contratto della configurazione. Viene poi creata una funzione `init` che assegna gli indirizzi passati come parametro ai rispettivi campi. Questa funzione verrà poi chiamata in fase di deploy quando saranno noti gli indirizzi effettivi.
 ```
 Contract a{}
 Contract b{}
 Contract c{}
 ```
 La configurazione base mostrata nell'esempio viene compilata in:
-```solidity
+```Solidity
 contract a {
     Interf1 c;
     Interf0 b;
@@ -566,37 +572,155 @@ contract c {
 ```
 dove la variabile booleana `initialize` assicura che la funzione `init` non venga chiamata più volte. Così ogni contratto si può riferire agli altri contratti della configurazione. 
 
+<!--TODO dire da qualche parte che bisogna mettere i costruttori payable-->
 ## Considerazioni implementative
 
-<!--
-A livello implementativo, in un primo momento basta tradurre i nodi dell'AST di `scl` nei nodi dell'AST di solidity, e poi è necessario che l'AST generato diventi effettivo codice Solidity. Come si è visto nel capitolo precedente, i due alberi di sintassi astratta sono molto simili quindi è abbastanza banale effettuare la traduzione. Il maggiore sforzo si fa nella generazione delle interfacce appena viste, e nell'implementazione dei `symbol` in `scl`. 
+### Associazione tra i tipi di `scl` e Solidity
 
-Per implementare le interfacce è necessario che il compilatore associ ad ogni contratto la sua interfaccia e si ricordi di questa associazione, che diventa necessaria nel momento del cast. 
--->
-<!--
-Tabelle varie, considerazioni implementative
-    Tabella dei simboli
-    Tabella delle interfacce
+A livello implementativo, la traduzione da AST di `scl` a AST di Solidity è abbastanza semplice. Si parte creando un'associazione tra i tipi di dato in `scl` e tipi in Solidity. Si è infatti visto essere gli stessi ad eccezione degli umani, che non sono presenti in Solidity, e dei contratti di `scl` che vengono tradotti in indirizzi o oggetti di tipo interfaccia. Si ha quindi un'associazione abbastanza semplice:
+```ocaml
+let get_typename  : type a b. a typename -> b tag -> any_typename =
+ fun typ tag ->
+  match tag with
+  | SmartCalculus.Int -> Typename Int
+  | SmartCalculus.Bool -> Typename Bool
+  | SmartCalculus.String -> Typename String
+  | SmartCalculus.ContractAddress -> Typename typ
+  | SmartCalculus.HumanAddress -> raise CompilationFail
+```
+Pertanto se si cerca di tradurre il tipo umano viene sollevata un'eccezione, mentre per tradurre il contratto, a seconda del contesto, deve essere specificato il relativo tipo di ritorno (o indirizzo o interfaccia). In tutti gli altri casi il tipo rimane il medesimo.
 
-Perché solidity non è un buon codice
--->
-## Problemi con il sistema di tipi in solidity
+Una volta creata questa associazione, la costruzione dell'albero è banale in quanto quasi tutti i costrutti `scl` sono già presenti in Solidity. In più grazie all'implementazione tramite GADT dei due alberi non è necessario nessun vero _type checking_: sappiamo che l'albero `scl` è già ben tipato, allora se viene rispettata l'associazione anche l'AST Solidity sarà ben tipato. Rimane solo da implementare i costrutti di `scl` non presenti in Solidity, in particolare `symbol`, e mettere in piedi il meccanismo per associare ad ogni contratto la sua interfaccia. 
 
+### Implementazione del costrutto `symbol`
+
+Il costrutto `symbol` di `scl` permette di assegnare una stringa a un intero. Il razionale è che, se ci si vuole riferire a una costante senza interesse verso l'effettivo valore, è più comodo usare una stringa piuttosto che un intero. Ovviamente Solidity non mette a disposizione alcuna funzione che implementa symbol. Si può però usare il tipo `mapping` di Solidity, che rende possibile definire delle funzioni hash. In particolare si può creare una funzione hash `symbol` che associ a una stringa il relativo intero. Per implementare questa funzione, però, è necessario che a stringhe già definite sia associato lo stesso valore -- altrimenti si perderebbe la definizione di funzione hash. Il compilatore pertanto, durante la costruzione dell'albero, deve conoscere quali stringhe di `symbol` sono già state utilizzate. Similmente a quanto avvenuto nell'implementazione del parser, anche per l'implementazione del compilatore è necessaria una tabella che viene riempita a cui il compilatore fa riferimento. In questa tabella devono essere contenuti tutte le stringhe di `symbol` già conosciute, in modo che quando si ha la traduzione di questo costrutto la relativa stringa viene aggiunta alla tabella solo nel caso in cui non sia ancora presente. Quando poi verrà tradotto l'AST In codice Solidity è necessario che nel costruttore venga associato a ogni `symbol` un valore diverso. 
+```
+Contract a{
+    function foo() : int{
+        x = symbol("something")
+        x = symbol("else")
+        x = symbol("something")
+        return x
+    }
+}
+```
+Il contratto `a` verrà quindi compilato in 
+```
+contract a {
+    mapping (string => int) symbol;
+    int x = 0;
+    constructor() payable public {
+        symbol['else'] = 0;
+        symbol['something'] = 1;
+
+    }
+    function foo() payable public returns (int ){
+        x = symbol['something'];
+        x = symbol['else'];
+        x = symbol['something'];
+        return x;
+    }
+}
+```
+Si ha quindi che viene fatto il `symbol` di solo due stringhe diverse `"something"` ed `"else"`, e a ognuna di queste viene assegnato un valore diverso.
+
+### Implementazione delle interfacce
+
+In `scl` è possibile che si abbia un riferimento a una variabile senza che questa sia dichiarata, ma questo non è possibile in Solidity. Ancora una volta è necessaria una tabella nella quale all'occorrenza vengano aggiunti i campi con il relativo tipo (esattamente come avveniva in scl). In questo modo quando viene fatta la traduzione in codice Solidity si aggiungono nelle dichiarazioni tutti i campi in precedenza non dichiarati. Questa tabella è inoltre utile per implementare le interfacce di cui precedentemente si è discusso.
+
+Si è visto infatti che ogni contratto -- inteso come variabile oggetto nella classe -- ha bisogno di essere associato a un'interfaccia. Anche in questo caso è necessario che il compilatore conosca questa associazione, in modo da poter modificare, aggiungendo metodi, le interfacce già presenti. Questa associazione è mantenuta all'interno della tabella delle variabili: ad ogni variabile di tipo contratto viene aggiunto un valore con l'id (che sarebbe il nome) dell'interfaccia relativa. Perciò è necessaria anche un'altra tabella in cui ad ogni interfaccia è associata la lista dei suoi metodi. Per cui, quando si ha una chiamata di funzione su un contratto (e quindi il compilatore deve aggiungere la funzione all'interfaccia del contratto), viene prima cercato l'id dell'interfaccia nella tabella delle variabile, poi dall'id si trova la relativa interfaccia nella tabella che contiene tutte le interfacce: non rimane che aggiungere a questa il metodo. 
+
+Si è visto che l'albero di sintassi astratta generato cerca di essere il più fedele possibile ai costrutti del linguaggio Solidity, quindi la traduzione dall'AST al codice consiste semplicemente nell'attribuire a ogni costrutto il giusta stringa.
+
+## Problemi con il sistema di tipi in Solidity
+
+Solidity è un linguaggio tipato staticamente, e ciò che ci si aspetta quindi è che il compilatore Solidity garantisca la condizione di _type-safety_, e nel caso non vengano rispettati dei vincoli di tipo non generi il bytecode necessario per l'esecuzione. Durante l'implementazione della compilazione, però, ci si è accorti come sia semplice aggirare il controllo statico dei tipi del compilatore. L'esempio seguente ne è la prova:
+```
+contract c1 {
+    function foo() payable external returns (bool){
+        return true;
+    }
+}
+
+contract c2 {
+    function fie(bool) payable external returns (int){
+        return 42;
+    }
+}
+
+contract sample{
+
+    function test(int, bool) payable public{
+        c2 b = new c2();
+        b.foo();
+    }
+}
+```
+In questo caso nella funzione `test` di `sample` il contratto `b` sta facendo una chiamata a un metodo di una classe che non è sua: il compilatore giustamente solleva un errore di tipo. Basta però fare una semplice modifica solamente alla funzione `test` e il compilatore non solleverà più l'eccezione.
+```
+contract sample{
+
+    function test(int, bool) payable public{
+        c2 b = new c2();
+        c1(address(b)).foo();
+    }
+}
+```
+Ci si chiede allora come viene fatto il cast da `c1` a `c2` visto che sono due classi di contratti con metodi diversi. Il cast di Solidity in realtà ha solo valenza sintattica: in realtà non viene fatto nessun cast né a tempo di compilazione né durante la compilazione. Quindi in questo caso non si riscontra nessun errore a tempo di compilazione, ma verrà sollevato un errore a tempo di esecuzione. 
+
+Questa mancanza di un controllo statico del cast, può risultare particolarmente dannoso. Un pattern spesso usato nel linguaggio Solidity è `msg.sender.transfer(n)` che consiste nel trasferire `n` Ether all'indirizzo del chiamante, passando per la sua speciale funzione _fallback_. Se questa non dovesse essere definita si avrebbe un errore a tempo di esecuzione, che comporterebbe un mancato trasferimento di denaro -- come ulteriormente approfondito da <!-- TODO: riferimento all'articolo-->.
 
 ## Conclusione 
 
+In questo capitolo si è mostrato come avviene la compilazione verso Solidity per un programma in `scl`. Viene quindi prima fatta la traduzione da AST `scl` a AST Solidity, e da quest'ultimo viene generato il codice. Questi due procedimenti sono abbastanza banali, se non per il fatto che in Solidity vengono definiti le classi dei contratti, diversamente a quanto avviene in `scl` dove vengono definiti gli oggetti. È necessario inoltre poter fare le chiamate di funzioni sugli oggetti di tipo contratto, e questo è stato reso possibile assegnando ad ogni tipo una sua interfaccia. Durante la compilazione si sono riscontrati dei limiti del sistema di tipi del linguaggio Solidity, in particolare si ha che nel cast non avviene nessun controllo sul tipo, ma si fa solo in modo che il compilatore non sollevi un'eccezione -- con particolari problemi di sicurezza che questa pratica solleva.
+
+<!--TODO: gadt nelle conclusioni -->
+
 # Fase di deploy con script Python
+
+## Introduzione 
+
+Una volta che si ha a disposizione il codice Solidity si ha la forma dei contratti definiti in una configurazione `scl`, mancano però gli effettivi contratti sulla blockchain. Per fare deploy, quindi, è necessario uno script che si colleghi alla rete e che crei i contratti nella forma. Come linguaggio di scripting è stato scelto Python perché dispone dei mezzi necessari per interagire con Ethereum. Per la fase di testing, invece di creare i contratti direttamente sulla rete di Ethereum, è stata creata una rete locale, la quale permette l'accesso a determinati account.
+
+## Implementazione script Python
+
+Il compilatore oltre al codice Solidity deve generare il codice dello script Python. Questo codice si deve preoccupare quindi di creare tutti i contratti della configurazione avendo così per ciascuno il proprio ABI e il proprio indirizzo. Per ogni contratto poi è necessario che gli venga assegnato il `balance` iniziale (<!--TODO: riferimento-->), che venga chiamata la funzione `init`<!--TODO: indirizzo di riferimento--> a cui vengano passati come parametri gli indirizzi degli altri contratti e che vengano salvati l'indirizzo e l'ABI, che costituiscono gli elementi necessari per potersi riferire al contratto.
+
+Per la creazione dei file, lo script deve compilare il codice Solidity generato in precedenza, questo è reso possibile dalla funzione `compile_source` che compila il file Solidity passato per parametro, in particolare crea una lista dove all'interno di ogni elemento è presente l'id e l'interfaccia di ogni contratto. 
+
+La libreria invece che permette di interagire con Ethereum invece è `Web3.py`. Questa mette a disposizione metodi per collegarsi a un nodo di Ethereum e permette di generare contratti nella blockchain coi quali interagire. Dall'interfaccia del contratto generata dopo la compilazione è possibile estrapolare l'ABI e il bytecode relativi ai contratti, che sono gli elementi necessari per costruire il contratto. Una volta che si ha l'oggetto contratto è possibile aggiungere il `balance` iniziale relativo passandolo come `value` del costruttore. Una volta chiamato il costruttore il contratto viene aggiunto nella blockchain e gli viene assegnato un indirizzo:
+
+```python
+def deploy_contract(w3, contract_interface, balance):
+    contract = w3.eth.contract(
+        abi=contract_interface['abi'],
+        bytecode=contract_interface['bin'])
+    tx_hash = contract.constructor().transact({'value': balance})
+    print('waiting for address...')
+    address = w3.eth.waitForTransactionReceipt(tx_hash)
+    return address
+```
+
+Dopo che un contratto è stato creato, è possibile chiamare qualsiasi funzione con visibilità `external` del contratto, quindi è possibile anche settare gli indirizzi chiamando la funzione `init` relativa al contratto. Lo script deve comunicare anche tutte le informazioni necessarie per rendere possibile il deploy all'esterno dello script. Sostanzialmente per ogni oggetto contratto deve essere comunicato l'indirizzo e l'ABI, in modo da poter ricreare il medesimo contratto: il primo consiste in una stringa quindi lo script semplicemente lo stampa, mentre il secondo è un dizionario in Python quindi viene salvato come file JSON e ne viene comunicato il percorso col nome. 
+
+## Testing
+
+## Conclusione
+
+Si è visto che il compilatore oltre a generare il codice Solidity che definisce i contratti in modo conforme alla struttura `scl`, genera un codice Python che quando eseguito viene fatto l'effettivo deploy dei metodi. Questo codice oltre a fare il deploy si preoccupa di inizializzare i contratti con il relativo `balance` e chiamando la funzione `init`, in modo che ogni contratto conosca effettivamente tutti gli altri contratti della configurazione. Una volta eseguito questo codice si hanno tutti gli strumenti per fare il deploy al fine di rendere effettivi i contratti creati in `scl` e poter condurre esperimenti su questi.
 
 # Conclusione 
 
-<!--
-# Ringraziamenti
 
 # Bibliografia
 
+# Ringraziamenti
+
+<!--
 Articolo di coen
 
-Articolo Crafa
+Articolo Crafa x2
 
 Articolo GADT
 
@@ -604,8 +728,7 @@ Articolo Intrinsically Typed
 
 Libro linguaggi
 
-Documentazioni online??
+Documentazioni online Solidity e OCaml
 
-Slide di coen???
 -->
 

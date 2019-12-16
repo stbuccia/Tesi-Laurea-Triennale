@@ -1,0 +1,40 @@
+Buongiorno, sono Stefano Bucciarelli e presento la tesi dal titolo: Un compilatore per un linguaggio per smart contract intrinsecamente tipato. 
+Gli smart contract sono programmi memorizzati in una blockchain che è replicata in tutti i nodi di una rete distribuita. 
+Gli utenti iscritti alla rete possono fare transazioni invocando i metodi degli smart contract, avendo quindi la possibilità di fare uno scambio di risorse senza che ci sia una terza parte che vigili sullo scambio. Le transazioni poi vengono registrate in ogni nodo della rete. 
+Dal disegno notiamo appunto la mancanza di un'autorità centrale, e il fatto che la rete sia pubblicamente disponibile. Queste caratteristiche rendono possibile la presenza di agenti malevoli nella rete interessati ad effettuare attacchi sul sistema. 
+Il codice degli smart contract, quindi è codice critico in quanto deve poter gestire considerevoli somme di denaro in una rete pubblicamente accessibile: diventa di conseguenza interessante e necessario fare analisi statica sugli smart contract.
+
+Tra queste una è stata svolta da un gruppo di ricerca dell'Università di Bologna. 
+Questa ha visto l'introduzione di un modello formale che rappresentasse il sistema descrivendo il comportamento degli attori coinvolti, ovvero utenti e contratti, sotto forma di programma sequenziale. 
+Questi programmi erano scritti in un linguaggio solo teorico: nel senso che mancavano gli strumenti che, partendo dal modello, portassero ad avere concretamente i contratti modellizzati.
+Il mio contributo quindi è stato quello di creare un'infrastruttura che portasse a eseguire su una blockchain i contratti definiti nel modello formale. 
+In primo luogo è stato necessario definire una sintassi, attraverso una grammatica, per il modello formale perché precedentemente questa mancava. La prima fase del mio lavoro, è stata quindi definire una sintassi e implementare un parser che traducesse un testo nella sintassi nel rispettivo albero di sintassi astratta del modello formale. 
+Successivamente ho implementato un compilatore che dall'AST del modello formale traducesse verso un linguaggio per smart contract già definito, per poi poter andare a fare effettivamente il deploy dei contratti descritti nel modello formale. Nel mio caso ho usato il linguaggio Solidity per la blockchain Ethereum.
+Il modello permette di esprimere una configurazione di contratti, in cui tutti i contratti rappresentati come oggetti si conoscono. 
+Invece Solidity è basato sulle classi, quindi l'istanziazione dei contratti si ha in un momento successivo alla compilazione, nell'apposita fase di deploy. In questa fase è necessario anche comunicare a ciascun contratto il riferimento degli altri.
+
+Nell'implementazione del parser e del compilatore ho fatto uso di un AST intrinsecamente tipato. Questo è una struttura dati a tipo dipendente in grado di esprimere tutti e soli programmi ben tipati. 
+In questa maniera non è stato necessario implementare controlli di tipo esterni all'albero, perché solo il fatto di costruire l'AST del programma, dà la garanzia di avere un programma bene tipato.
+Le strutture dati intrinsecamente tipate sono implementabili in pochi linguaggi. Tra questi c'è OCaml che grazie ai GADT mette a disposizione una strategia per l'implementazione di queste strutture intrinsecamente tipate. OCaml è il linguaggio che ho usato per l'implementare il parser e il compilatore.
+Per esempio vediamo una sintassi per le espressioni, costruita prima senza poi con l'uso di GADT. 
+Nel primo caso i costrutti delle espressioni non catturano il tipo: ad esempio un and tra intero e booleano risulta sintatticamente corretto. 
+Con i GADT invece si può dichiarare il tipo delle espressioni coinvolte in un costrutto, permettendo che il tipo dell'espressione venga istanziato. In questo modo l'And risulta mal tipato dalla sola sintassi. 
+
+Naturalmente il type checking in qualche modo bisogna farlo: non si ha nessuna garanzia che il testo del contratto di cui fare il parsing sia effettivamente ben tipato. Durante la costruzione dell'AST che richiede un programma ben tipato, ho dovuto fare in modo che il parser controllasse i vincoli di tipo, definiti dallo stesso AST. Infatti l'AST dello stesso modello formale era già implementato attraverso i GADT.
+La tecnica usata per l'analisi sintattica è quella dei parser combinator: questi infatti sono delle funzioni di ordine superiore che accettano diversi parser in input, li compongono e restituiscono un nuovo parser in output. 
+Con questa tecnica è stato semplice definire un parser partendo dalla grammatica: ai simboli terminali e non terminali è stato fatto corrispondere un parser di base, mentre gli operatori sintattici possono essere espressi come parser combinator che compongono diversi parser di base. 
+
+Per quanto riguarda la compilazione ho definito tramite i GADT un AST intrinsecamente tipato che esprime un sottoinsieme di costrutti per Solidity. La compilazione quindi è divisa in due fasi: la prima in cui si passa dall'AST intrinsecamente tipato del modello formale a quello per Solidity, la seconda dove dall'AST per Solidity si ha una traduzione verso l'effettivo codice. 
+Quindi si deve tradurre un programma ben tipato nel modello formale in un programma ben tipato in Solidity, e questo è possibile creando una corrispondenza tra i tipi che possono essere definiti nei due linguaggi. 
+Per i tipi di base questo è banale, mentre è più interessante capire come tradurre il tipo che nel modello formale rappresenta i contratti, che nell'esempio è relativo alle variabili a e b.
+Solidity ha un sistema di tipi statico, quindi sebbene sia possibile dichiarare oggetti di un tipo contratto generico, su questi non è possibile invocare i metodi senza prima fare un cast verso un'interfaccia o in una classe. 
+Per risolvere questo problema il compilatore fa inferenza di interfacce: ad ogni variabile di tipo contratto viene associata un'interfaccia costruita aggiungendo le signature di tutti i metodi invocati dalla variabile. 
+Col fatto che il modello formale definiva gli oggetti contratti e umani, mentre solidity è un linguaggio a classi è necessario che l'istanziazione sia esterna alla compilazione.
+Il compilatore, infatti, genera del codice Python che si preoccuperà di collegarsi alla rete, di compilare il codice solidity generato, e per ogni contratto compilato dovrà creare l'istanza nella blockchain
+
+Adesso abbiamo quindi a disposizione tutti gli strumenti necessari: siamo in grado di scrivere un programma per il modello formale, sul quale poter fare tutte le analisi, e per i contratti definiti in questo modello siamo in grado di generare  il codice corrispondente di cui andare a fare il deploy su una blockchain.
+Il tutto ha visto la produzione di circa 1400 righe in codice OCaml, distribuite tra 800 per il compilatore e 600 per il parsing.
+
+Non è stato però generato il codice corrispondente agli utenti che si possono descrivere nel modello: un ampliamento futuro interessante sarebbe quello di generare allo stesso modo il codice per gli umani. Ovviamente non sarebbe in un linguaggio per smart contract, ma sarebbe da scegliere un linguaggio capace di interagire con gli smart contract, come Python o JS.
+In futuro poi è possibile che verranno eseguite ulteriori analisi sugli smart contract usando modelli differenti. Per questo sarebbe necessario rendere più modulare l'infrastruttura in modo che si possa adattare a modelli differenti
+Grazie a tutti per l'attenzione!

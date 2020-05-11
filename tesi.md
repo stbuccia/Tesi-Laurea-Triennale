@@ -47,7 +47,7 @@ Nel nostro caso però, sia nel compilatore che nel parser, abbiamo sfruttato una
 
 Per implementare parser e compilatore, siamo interessati a implementare un _Intrinsically Typed Data Structure_ in OCaml, vediamo quindi gli strumenti che il linguaggio mette a disposizione. 
 
-## Generic Algebraic Data Type
+## Generalized Algebraic Data Type
 
 In prima battuta capiamo cosa sia un _Algebraic Data Type_ (ADT) che OCaml permette di definire. Un ADT è un tipo composto definito tramite intersezione o unione disgiunta di altri tipi. Mostriamo un esempio di ADT: 
 
@@ -133,7 +133,7 @@ Il parser verso `scl` deve costruire l'albero di sintassi astratta del testo in 
 \textit{act}  & ::= & (\textit{Human}  |  \textit{Contract}) \textbf{(} Int \textbf{)}? \textbf{\{} \textit{decl}* \textit{meth}* \\ 
 & & (\textit{stm} \textbf{return} \textit{e})?\textbf{\}} & (attore) \\
 
-\textit{stm}  & ::= &  \textit{decl}  |  Var \textbf{=} \textit{rhs}  |  \textbf{if} \textit{be} \textbf{then} \textit{\textit{stm}} \textbf{else} \textit{stm} & (statement) \\ & & |   \textit{stm} \textit{stm}  |  \textit{stm} \textbf{+} \textit{stm}  |  \textbf{\{} \textit{stm} \textbf{\}}) \\
+\textit{stm}  & ::= &  \textit{decl}  |  Var \textbf{=} \textit{rhs}  |  \textbf{if} \textit{be} \textbf{then} \textit{\textit{stm}} \textbf{else} \textit{stm} & (statement) \\ & & |   \textit{stm} \textit{stm}  |  \textit{stm} \textbf{+} \textit{stm}  |  \textbf{\{} \textit{stm} \textbf{\}} \\
 
 \textit{decl} & ::= & \textit{t }Var (\textbf{=} \textit{v})? & (dichiarazione) \\
 \textit{meth} & ::= &  \textbf{function} Var \textbf{(}(\textit{t }Var (\textbf{,} \textit{t }Var)*)? \textbf{):}  & (metodo)
@@ -377,13 +377,15 @@ let rec atomic_int_expr s =
  choice_list [
    comb_parser (base Int) (fun expr -> AnyExpr(Int,expr));
    concat (kwd "-") atomic_int_expr (fun _ -> minus) ;
-   concat (concat (kwd "(") int_expr scd) (kwd ")") fst ;
-   concat (concat (kwd "max") int_expr scd) int_expr max;
-   concat (kwd "symbol") symbol_pars scd;
+   brackets_pars int_expr;
+   comb_parser (concat (kwd "max") (brackets_pars 
+    (concat (concat int_expr (kwd ",") fst) int_expr couple))
+     scd) (fun (e1,e2) -> max e1 e2);
+   concat (kwd "symbol") (brackets_pars symbol_pars) scd;
  ] s
 and int_expr s =
- concat atomic_int_expr (option cont_int_expr)
- (fun x f -> match f with Some funct -> funct x | _ -> x) s
+ concat atomic_int_expr (option cont_int_expr) 
+  (fun x f -> match f with Some funct -> funct x | _ -> x) s
 and binop s =
  choice_list [
   const (Kwd "+") (fun _ -> plus) ;
@@ -544,14 +546,14 @@ and 'a expression =
  | And : bool expression * bool expression -> bool expression
  | Or : bool expression * bool expression -> bool expression
  | Not : bool expression -> bool expression
- | CondExpr : bool expression * 'a expression * 'a expression -> 
-    'a expression
+ | CondExpr : bool expression * 'a expression * 'a expression
+   -> 'a expression
  | Call : interface_id expression * ('a, 'b) funct * 
  'a expression_list * (int expression) option-> 'b expression
 and _ expression_list =
    ExprNil : unit expression_list
- | ExprCons : ('a typename * 'a expression) * 'b expression_list ->
-    ('a * 'b) expression_list
+ | ExprCons : ('a typename * 'a expression) * 'b expression_list
+   -> ('a * 'b) expression_list
 and _ param_list = 
    PNil: unit param_list 
  | PCons: ('a var * storage option) * 'b param_list -> 
@@ -563,8 +565,8 @@ and ('a, 'b) funct = string * 'a param_list *
         view list * visibility list
 and meth = Funct : (('a, 'b) funct) -> meth
 and interface = Interface : (interface_id * meth list) ->  interface
-and declaration = Declaration : 'a var * ('a expression option) -> 
-    declaration
+and declaration = Declaration : 'a var * ('a expression option) 
+   -> declaration
 and statement =
  | Empty
  | IfElse : bool expression * statement * statement -> statement
@@ -850,16 +852,15 @@ Il lavoro svolto lascia spazio a diversi approfondimenti futuri. In primo luogo,
 
 # Ringraziamenti {-}
 
-In primo luogo ringrazio il professor Coen per avermi dato l'opportunità di realizzare una tesi che suscitasse il mio interesse, per la sua generosa disponibilità mostrata nel risolvere ogni mio dubbio o chiarimento, e per avermi introdotto alla programmazione funzionale: argomento che mi ha sempre affascinato ma che non avevo mai avuto occasione di studiare.
+In primo luogo ringrazio il professor Coen per avermi dato l'opportunità di realizzare una tesi che suscitasse il mio interesse, per la sua generosa disponibilità mostrata nel risolvere ogni mio dubbio o chiarimento, e per avermi introdotto alla programmazione funzionale: argomento che mi ha sempre lasciato affascinato ma che non avevo mai avuto modo di studiare.
 
-Ringrazio i miei genitori che, supportando i miei studi, mi hanno dato la possibilità di intraprendere questa strada. Li ringrazio anche per la comprensione e la pazienza mostrata ultimamente, il fatto che da più di un mese io abbia smesso di stirare ne è la prova. Ringrazio i miei fratelli, perché (oltre a non essersi lamentati del fatto che non stiri più) la loro presenza in casa è sempre qualcosa di speciale.
+Ringrazio i miei genitori che supportando i miei studi mi hanno danno la possibilità di intraprendere la questa strada. Li ringrazio anche per la comprensione e la pazienza mostrata ultimamente, il fatto che da più di un mese io abbia smesso di stirare ne è la prova. Ringrazio i miei fratelli, perché (oltre a non essersi lamentati del fatto che non stiri più) la loro presenza in casa è sempre qualcosa di speciale.
 
-Ringrazio i membri della Fratellanza che coerentemente al quarto articolo che dice _"La Fratellanza occorre sempre in aiuto dei suoi pirati se questi in difficoltà"_ mi hanno dato tutto il loro sostegno. In primis ringrazio Monica, per lei potrei fare una lista infinita ma in particolare la ringrazio per la pazienza che in questo periodo ha mostrato nei miei confronti: nonostante il mio essere scorbutico, standomi sempre accanto è stata la principale fonte di distrazione dalle mie ansie e preoccupazioni, in lei ho veramente trovato l'affetto di cui avevo bisogno. Ringrazio poi Emanuele, al quale, dopo anni e anni, mi posso sempre affidare per qualsiasi cosa, in particolare in quest'ultimo periodo in cui ogni suo aiuto è stato prezioso. Sebbene l'Informatica lo consideri un traditore lui le ha dato un piccolo contributo, che si trova nelle pagine di questa tesi. Ringrazio Fabio (e le sue ventitré personalità) perché la sua serenità e la sua spontaneità lasciano sempre un sorriso sul mio viso.
+Ringrazio i membri della Fratellanza che coerentemente al quarto articolo che dice _"La Fratellanza occorre sempre in aiuto dei suoi pirati se questi in difficoltà"_ mi hanno dato tutto il loro sostegno. In primis ringrazio Monica, per lei potrei fare una lista infinita ma in particolare la ringrazio per la pazienza che in questo periodo ha avuto nei miei confronti: nonostante il mio essere scorbutico, standomi sempre accanto è stata la principale fonte di distrazione dalle mie ansie e preoccupazioni, in lei ho veramente trovato l'affetto di cui avevo bisogno. Ringrazio poi Emanuele, al quale dopo anni e anni mi posso sempre affidare per qualsiasi cosa, in particolare in quest'ultimo periodo dove ogni suo aiuto è stato prezioso. Sebbene l'Informatica lo consideri un traditore lui le ha dato un piccolo contributo, che si trova nelle pagine di questa tesi. Ringrazio Fabio (e le sue ventitré personalità) perché la sua serenità e la sua spontaneità lasciano sempre un sorriso sulla faccia.
 
 Ringrazio anche i miei amici universitari, che in questi tre anni di gioie e dolori mi sono spesso venuti in soccorso. Dagli esami preparati insieme ai posti tenuti a lezione, dai babbi natali segreti al pattinaggio in cui c'è sempre qualcuno che pacca, loro hanno contribuito a farmi raggiungere questo traguardo. Un ringraziamento speciale va a Giulia, per avermi sempre dato una mano nelle "cose burocratiche", e per avermi prestato i suoi appunti (non esiste criptovaluta in grado di stimarne l'effettivo valore) prima di ogni esame.
 
 Infine ringrazio tutti gli amici e parenti (non li elenco tutti per motivi di tempo) per il sostegno e la forza che mi danno ogni giorno.
-
 
 ---
 bibliography: bib.bib

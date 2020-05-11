@@ -17,16 +17,16 @@ theme:
 
 # Descrizione smart contract
 
-![](smart-contract.svg) 
+![](svg/smart-contract.svg) 
 
 # Analisi su smart contract
 
-![](analisi.svg)
+![](svg/analisi.svg)
 
 
 # Analisi su smart contract
 
-![](lavoro.svg)
+![](svg/lavoro.svg)
 
 # Intrinsically Typed Data Structure
 
@@ -37,7 +37,7 @@ theme:
 + Parsing = Parser + Type checking
 + Parser combinator
 
-![](parser.svg)
+![](svg/parser.svg)
 
 # Compilazione e deploy
 
@@ -45,7 +45,7 @@ theme:
 + Inferenza di interfacce
 + Script Python per il deploy
 
-![](compilatore.svg)
+![](svg/compilatore.svg)
 
 # Compilazione e deploy
 
@@ -53,7 +53,7 @@ theme:
 + Inferenza di interfacce
 + Script Python per il deploy
 
-![](interfacce.svg)
+![](svg/interfacce.svg)
 
 # Lavoro svolto
 

@@ -34,5 +34,6 @@ Anno Accademico 2018-2019}}%inserire l'anno accademico a cui si \`e iscritti
 \end{center}
 \end{titlepage}
 \newpage
+\newpage
 \tableofcontents
 \newpage
